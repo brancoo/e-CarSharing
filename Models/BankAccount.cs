@@ -6,9 +6,9 @@ using System.Web;
 
 namespace e_CarSharing.Models
 {
-    public class BankEntity
+    public class BankAccount
     {
-        public int BankId { get; set; }
+        public int BankAccountId { get; set; }
 
         [Required]
         [DataType(DataType.Text), MaxLength(100)]

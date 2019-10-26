@@ -23,9 +23,10 @@ namespace e_CarSharing.Models
         [DataType(DataType.MultilineText), MaxLength(120)]
         public string Address { get; set; }
 
-        [ForeignKey("BankId")]
-        public int BankId { get; set; }
-        public BankEntity BankEntity { get; set; }
+        [ForeignKey("BankAccount")]
+        [Required]
+        public int BankAccountId { get; set; }
+        public BankAccount BankAccount { get; set; }
 
         public IList<Vehicle> Vehicles {get; set;} //list of vehicles owned
     }

@@ -16,15 +16,17 @@ namespace e_CarSharing.Models
         public int ExpectedTime { get; set; } // expected time of use
 
         [ForeignKey("RegularUser")]
+        [Required]
         public int RegularUserId { get; set; }
         public RegularUser RegularUser { get; set; } // the regularUser that will use the car
 
         [ForeignKey("Vehicle")]
+        [Required]
         public int VehicleId { get; set; }
         public Vehicle Vehicle { get; set; }
 
-        [Required]
         [ForeignKey("VehicleStation")]
+        [Required]
         public int VehicleStationId { get; set; }
         public VehicleStation VehicleStation { get; set; } //where the RegularUser have to leave the car (the destination)
     }

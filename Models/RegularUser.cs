@@ -20,10 +20,10 @@ namespace e_CarSharing.Models
         [DataType(DataType.Text), MaxLength(60)]
         public string City { get; set; }
 
-        [ForeignKey("BankId")]
+        [ForeignKey("BankAccount")]
         [Required]
-        public int BankId { get; set; }
-        public BankEntity BankEntity { get; set; }
+        public int BankAccountId { get; set; }
+        public BankAccount BankAccount { get; set; }
 
         public IList<Request> Requests { get; set; } //dont know if has to have a foreign key for Request table
     }
