@@ -8,7 +8,7 @@ namespace e_CarSharing.Models
         public int VehicleId { get; set; }
 
         [Required(ErrorMessage = "You must provide a name!")]
-        [DataType(DataType.Text)]
+        [DataType(DataType.Text), MaxLength(80)]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "You must declare what type of vehicle you own!")]

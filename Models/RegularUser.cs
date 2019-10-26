@@ -16,12 +16,8 @@ namespace e_CarSharing.Models
         [DataType(DataType.Text), MaxLength(80)] 
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "You must say where are you from!")]
-        [DataType(DataType.Text)]
-        public string Country { get; set; }
-
         [Required(ErrorMessage = "You must provide a city!")]
-        [DataType(DataType.Text)]
+        [DataType(DataType.Text), MaxLength(60)]
         public string City { get; set; }
 
         [ForeignKey("BankId")]

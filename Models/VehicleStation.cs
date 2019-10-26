@@ -11,7 +11,7 @@ namespace e_CarSharing.Models
         public int VehicleStationId { get; set; }
 
         [Required(ErrorMessage = "You must provide a name")]
-        [DataType(DataType.Text)]
+        [DataType(DataType.Text), MaxLength(15)] 
         public string Name { get; set; }
 
         [Required(ErrorMessage = "You must provide a latitude")]
@@ -24,12 +24,8 @@ namespace e_CarSharing.Models
         [DataType(DataType.Text)]
         public Double Longetide { get; set; } 
 
-        [Required(ErrorMessage = "You must declare where are you from!")]
-        [DataType(DataType.Text)]
-        public string Country { get; set; }
-
         [Required(ErrorMessage = "You must say where the station is from")]
-        [DataType(DataType.Text)]
+        [DataType(DataType.Text), MaxLength(60)]
         public string City { get; set; }
 
         public IList<Vehicle> Vehicles {get; set;} //list of vehicles in the station

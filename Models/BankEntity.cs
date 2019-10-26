@@ -11,7 +11,11 @@ namespace e_CarSharing.Models
         public int BankId { get; set; }
 
         [Required]
-        [DataType(DataType.Text)]
+        [DataType(DataType.Text), MaxLength(100)]
         public string BankName { get; set; }
+
+        [Required(ErrorMessage = "You need to provide a Bank Account Number")]
+        [DataType(DataType.Text)]
+        public string BankAccountNumber { get; set; }
     }
 }
