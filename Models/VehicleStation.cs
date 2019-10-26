@@ -29,5 +29,10 @@ namespace e_CarSharing.Models
         public string City { get; set; }
 
         public IList<Vehicle> Vehicles {get; set;} //list of vehicles in the station
+
+        public VehicleStation()
+        {
+            Vehicles = new List<Vehicle>();
+        }
     }
 }

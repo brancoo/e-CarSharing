@@ -12,7 +12,6 @@ namespace e_CarSharing.Models
         {
 
         }
-
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<VehicleStation> VehicleStations { get; set; }
         public DbSet<Request> Requests { get; set; }

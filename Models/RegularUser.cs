@@ -26,5 +26,10 @@ namespace e_CarSharing.Models
         public BankAccount BankAccount { get; set; }
 
         public IList<Request> Requests { get; set; } //dont know if has to have a foreign key for Request table
+
+        public RegularUser()
+        {
+            Requests = new List<Request>();
+        }
     }
 }

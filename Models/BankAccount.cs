@@ -17,5 +17,9 @@ namespace e_CarSharing.Models
         [Required(ErrorMessage = "You need to provide a Bank Account Number")]
         [DataType(DataType.Text)]
         public string BankAccountNumber { get; set; }
+
+        public BankAccount()
+        {
+        }
     }
 }

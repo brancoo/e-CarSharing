@@ -21,5 +21,12 @@ namespace e_CarSharing.Models
         [ForeignKey("VehicleStation")]
         public int VehicleStationId { get; set; }
         public VehicleStation VehicleStation { get; set; }
+
+        public bool BeingUsed { get; set; } //if the car is being used at the moment
+
+        public Vehicle()
+        {
+            BeingUsed = false;
+        }
     }
 }

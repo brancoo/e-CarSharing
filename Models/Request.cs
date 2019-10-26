@@ -29,5 +29,10 @@ namespace e_CarSharing.Models
         [Required]
         public int VehicleStationId { get; set; }
         public VehicleStation VehicleStation { get; set; } //where the RegularUser have to leave the car (the destination)
+
+        public Request()
+        {
+            this.RequestDate = DateTime.Now;
+        }
     }
 }

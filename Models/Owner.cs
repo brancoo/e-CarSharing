@@ -29,5 +29,10 @@ namespace e_CarSharing.Models
         public BankAccount BankAccount { get; set; }
 
         public IList<Vehicle> Vehicles {get; set;} //list of vehicles owned
+
+        public Owner()
+        {
+            Vehicles = new List<Vehicle>();
+        }
     }
 }
