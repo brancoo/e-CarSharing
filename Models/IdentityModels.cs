@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Data.Entity;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -28,5 +29,12 @@ namespace e_CarSharing.Models
         {
             return new ApplicationDbContext();
         }
+
+        public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<VehicleStation> VehicleStations { get; set; }
+        public DbSet<Request> Requests { get; set; }
+        public DbSet<RegularUser> RegularUser { get; set; }
+        public DbSet<Owner> Owner { get; set; }
+        public DbSet<BankAccount> BankEntity { get; set; }
     }
 }

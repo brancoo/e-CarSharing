@@ -1,23 +1,39 @@
 namespace e_CarSharing.Migrations
 {
+    using e_CarSharing.Models;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<e_CarSharing.Models.ApplicationContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<e_CarSharing.Models.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            ContextKey = "e_CarSharing.Models.ApplicationDbContext";
         }
 
-        protected override void Seed(e_CarSharing.Models.ApplicationContext context)
+        protected override void Seed(e_CarSharing.Models.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data.
+            //  to avoid creating duplicate seed data.var roleManager = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+            var roleManager = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+            string[] roleNames = { "Admin", "User", "Owner" };
+            foreach(var roles in roleNames)
+            {
+                if (!roleManager.RoleExists(roles))
+                {
+                    var role = new IdentityRole();
+                    role.Name = roles;
+                    roleManager.Create(role);
+                }
+            }
+
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('BankAccounts', RESEED, 0)");
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('Owners', RESEED, 0)");
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('RegularUsers', RESEED, 0)");
@@ -54,8 +70,7 @@ namespace e_CarSharing.Migrations
                 OwnerType = Models.OwnerType.PARTICULAR,
                 Address = "Rua do Zé Trolha",
                 BankAccountId = 2
-            }); ; ;
-
+            });
         }
     }
 }

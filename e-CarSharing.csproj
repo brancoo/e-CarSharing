@@ -174,22 +174,25 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201910261554286_InitialModel.cs" />
-    <Compile Include="Migrations\201910261554286_InitialModel.Designer.cs">
-      <DependentUpon>201910261554286_InitialModel.cs</DependentUpon>
+    <Compile Include="Migrations\201910201757467_InitialCreate.cs" />
+    <Compile Include="Migrations\201910201757467_InitialCreate.Designer.cs">
+      <DependentUpon>201910201757467_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201910261908096_UpdatedModel.cs" />
-    <Compile Include="Migrations\201910261908096_UpdatedModel.Designer.cs">
-      <DependentUpon>201910261908096_UpdatedModel.cs</DependentUpon>
+    <Compile Include="Migrations\201910271851441_newMigration.cs" />
+    <Compile Include="Migrations\201910271851441_newMigration.Designer.cs">
+      <DependentUpon>201910271851441_newMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\ApplicationContext.cs" />
+    <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BankAccount.cs" />
     <Compile Include="Models\Constants.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Owner.cs" />
     <Compile Include="Models\RegularUser.cs" />
     <Compile Include="Models\Request.cs" />
@@ -310,11 +313,11 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201910261554286_InitialModel.resx">
-      <DependentUpon>201910261554286_InitialModel.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910201757467_InitialCreate.resx">
+      <DependentUpon>201910201757467_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910261908096_UpdatedModel.resx">
-      <DependentUpon>201910261908096_UpdatedModel.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910271851441_newMigration.resx">
+      <DependentUpon>201910271851441_newMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -213,6 +213,6 @@ C:\Users\Branco\Desktop\e-CarSharing\bin\roslyn\System.Net.Http.dll
 C:\Users\Branco\Desktop\e-CarSharing\bin\roslyn\System.Net.Sockets.dll
 C:\Users\Branco\Desktop\e-CarSharing\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
 C:\Users\Branco\Desktop\e-CarSharing\bin\roslyn\System.Threading.Tasks.Extensions.dll
-C:\Users\Branco\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.InitialModel.resources
+C:\Users\Branco\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.InitialCreate.resources
 C:\Users\Branco\Desktop\e-CarSharing\obj\Debug\e-CarSharing.csproj.GenerateResource.cache
-C:\Users\Branco\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.UpdatedModel.resources
+C:\Users\Branco\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.newMigration.resources
