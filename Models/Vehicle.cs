@@ -22,7 +22,7 @@ namespace e_CarSharing.Models
         public int VehicleStationId { get; set; }
         public VehicleStation VehicleStation { get; set; }
 
-        public bool BeingUsed { get; set; } //if the car is being used at the moment
+        public bool BeingUsed { get; set; }
 
         public Vehicle()
         {

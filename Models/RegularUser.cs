@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 namespace e_CarSharing.Models
 {
@@ -25,11 +21,11 @@ namespace e_CarSharing.Models
         public int BankAccountId { get; set; }
         public BankAccount BankAccount { get; set; }
 
-        public IList<Request> Requests { get; set; } //dont know if has to have a foreign key for Request table
+        public IList<Rental> Rentals { get; set; } //dont know if has to have a foreign key for Request table
 
         public RegularUser()
         {
-            Requests = new List<Request>();
+            Rentals = new List<Rental>();
         }
     }
 }

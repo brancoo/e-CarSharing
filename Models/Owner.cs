@@ -19,10 +19,6 @@ namespace e_CarSharing.Models
         [DataType(DataType.Text), MaxLength(60)]
         public string City { get; set; }
 
-        [Required(ErrorMessage = "You must provide a address!")]
-        [DataType(DataType.MultilineText), MaxLength(120)]
-        public string Address { get; set; }
-
         [ForeignKey("BankAccount")]
         [Required]
         public int BankAccountId { get; set; }

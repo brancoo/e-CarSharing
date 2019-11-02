@@ -23,6 +23,15 @@ namespace e_CarSharing.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
+
+        }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Rental>()
+            .HasOptional(f => f.Delivery)
+            .WithRequired(s => s.Rental);
         }
 
         public static ApplicationDbContext Create()
@@ -32,9 +41,12 @@ namespace e_CarSharing.Models
 
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<VehicleStation> VehicleStations { get; set; }
-        public DbSet<Request> Requests { get; set; }
+        public DbSet<Rental> Rentals { get; set; }
         public DbSet<RegularUser> RegularUser { get; set; }
         public DbSet<Owner> Owner { get; set; }
         public DbSet<BankAccount> BankEntity { get; set; }
+        public DbSet<Delivery> Deliveries { get; set; }
+
+    
     }
 }
