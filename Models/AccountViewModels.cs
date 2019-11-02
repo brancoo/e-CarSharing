@@ -65,6 +65,10 @@ namespace e_CarSharing.Models
     public class RegisterViewModel
     {
         [Required]
+        [Display(Name = "Name")]
+        public string Name { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
@@ -81,8 +85,24 @@ namespace e_CarSharing.Models
         public string ConfirmPassword { get; set; }
 
         [Required]
+        [Display(Name = "Bank account Number")]
+        public string BankAccountNumber { get; set; }
+
+        [Required]
+        [Display(Name = "Bank Name")]
+        public string BankName { get; set; }
+
+        [Required]
+        [Display(Name = "City")]
+        public string City { get; set; }
+
+        [Required]
         [Display(Name = "Role")]
         public string Role { get; set; }
+
+        //[Required]
+        [Display(Name = "Identification")]
+        public OwnerType Identification { get; set; }
     }
 
     public class ResetPasswordViewModel

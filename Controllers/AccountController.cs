@@ -7,6 +7,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using e_CarSharing.Models;
 using System.Web.Security;
+using System;
+using System.Collections.Generic;
+using static e_CarSharing.Models.ApplicationDbContext;
 
 namespace e_CarSharing.Controllers
 {
@@ -15,6 +18,7 @@ namespace e_CarSharing.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationRoleManager _rolemanager;
         private ApplicationDbContext context;
 
         public AccountController()
@@ -22,11 +26,25 @@ namespace e_CarSharing.Controllers
             context = new ApplicationDbContext();
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationRoleManager roleManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            RoleManager = roleManager;
         }
+
+        public ApplicationRoleManager RoleManager
+        {
+            get
+            {
+                return _rolemanager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+            }
+            private set
+            {
+                _rolemanager = value;
+            }
+        }
+
 
         public ApplicationSignInManager SignInManager
         {
@@ -138,9 +156,21 @@ namespace e_CarSharing.Controllers
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
-        {
-            ViewBag.roles = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin"))
-                                            .ToList(), "Name", "Name");
+        { 
+            //ViewBag.Identification = new SelectList(typeof(OwnerType).GetEnumValues(), typeof(OwnerType).GetEnumValues(), typeof(OwnerType).GetEnumValues());
+
+            //return View();
+
+            //List<SelectListItem> list = new List<SelectListItem>();
+            //foreach (var role in RoleManager.Roles.Where(m=>!m.Name.Contains("Admin")))
+            //    list.Add(new SelectListItem() { Value = role.Name, Text = role.Name });
+            //ViewBag.Roles = list;
+
+            ViewBag.Roles = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin"))
+                                           .ToList(), "Name", "Name");
+           
+
+            ViewBag.Identification = new SelectList(typeof(OwnerType).GetEnumValues(), typeof(OwnerType).GetEnumValues(), typeof(OwnerType).GetEnumValues());
             return View();
         }
 
@@ -158,6 +188,16 @@ namespace e_CarSharing.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    await UserManager.AddToRolesAsync(user.Id, model.Role);
+                    var aux = context.BankEntity.Add(new BankAccount() { BankAccountNumber = model.BankAccountNumber, BankName = model.BankName});
+                    if (model.Role == "Owner")
+                    {
+                        context.Owner.Add(new Owner() { Name = model.Name, City = model.City, OwnerType = model.Identification, BankAccountId = aux.BankAccountId, BankAccount = aux });
+                    }
+                    else
+                        context.RegularUser.Add(new RegularUser() { Name = model.Name, City = model.City, BankAccountId = aux.BankAccountId, BankAccount = aux });
+                    await context.SaveChangesAsync();
+
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -165,11 +205,12 @@ namespace e_CarSharing.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    await this.UserManager.AddToRoleAsync(user.Id, model.Role);
                     return RedirectToAction("Index", "Home");
                 }
                 ViewBag.roles = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin"))
                                           .ToList(), "Name", "Name");
+                ViewBag.Identification = new SelectList(typeof(OwnerType).GetEnumValues());
+
                 AddErrors(result);
             }
 
