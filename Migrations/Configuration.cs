@@ -35,75 +35,7 @@ namespace e_CarSharing.Migrations
                 }
             }
 
-            IList<BankAccount> bankAccounts = new List<BankAccount>();
-            IList<Owner> owners = new List<Owner>();
-            IList<RegularUser> regularUsers = new List<RegularUser>();
-            IList<Vehicle> vehicles = new List<Vehicle>();
             IList<VehicleStation> vehicleStations = new List<VehicleStation>();
-
-            bankAccounts.Add(new BankAccount()
-            {
-                BankAccountId = 1,
-                BankAccountNumber = "PT 5000 1234",
-                BankName = "Caixa Geral de Depósitos"
-            });
-            bankAccounts.Add(new BankAccount()
-            {
-                BankAccountId = 2,
-                BankAccountNumber = "PT 5000 4567",
-                BankName = "Santander"
-            });
-            bankAccounts.Add(new BankAccount()
-            {
-                BankAccountId = 3,
-                BankAccountNumber = "PT 5000 6912",
-                BankName = "Novo Banco"
-            });
-            bankAccounts.Add(new BankAccount()
-            {
-                BankAccountId = 4,
-                BankAccountNumber = "PT 5000 7120",
-                BankName = "Novo Banco"
-            });
-            foreach (BankAccount bankAccount in bankAccounts)
-                context.BankEntity.Add(bankAccount);
-
-
-            owners.Add(new Owner()
-            {
-                OwnerId = 1,
-                OwnerType = OwnerType.PARTICULAR,
-                Name = "Joao Branco",
-                City = "Coimbra",
-                BankAccountId = 1
-            });
-            owners.Add(new Owner()
-            {
-                OwnerId = 2,
-                OwnerType = OwnerType.PARTICULAR,
-                Name = "Pedro Martins",
-                City = "Coimbra",
-                BankAccountId = 2
-            });
-            foreach (Owner owner in owners)
-                context.Owner.Add(owner);
-
-            regularUsers.Add(new RegularUser()
-            {
-                RegularUserId = 1,
-                Name = "Alexandre Pinho",
-                City = "Coimbra",
-                BankAccountId = 3
-            });
-            regularUsers.Add(new RegularUser()
-            {
-                RegularUserId = 2,
-                Name = "Maria José",
-                City = "Condeixa",
-                BankAccountId = 4
-            });
-            foreach (RegularUser regularUser in regularUsers)
-                context.RegularUser.Add(regularUser);
 
             vehicleStations.Add(new VehicleStation()
             {
@@ -123,25 +55,6 @@ namespace e_CarSharing.Migrations
             });
             foreach (VehicleStation vehicleStation in vehicleStations)
                 context.VehicleStations.Add(vehicleStation);
-
-            vehicles.Add(new Vehicle()
-            {
-                VehicleId = 1,
-                VehicleType = VehicleType.CAR,
-                Name = "Mercedes",
-                OwnerId = 1,
-                VehicleStationId = 1
-            }); 
-            vehicles.Add(new Vehicle()
-            {
-                VehicleId = 2,
-                VehicleType = VehicleType.CAR,
-                Name = "Porsche",
-                OwnerId = 2,
-                VehicleStationId = 2
-            });
-            foreach (Vehicle vehicle in vehicles)
-                context.Vehicles.Add(vehicle);
 
             base.Seed(context);
         }

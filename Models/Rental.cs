@@ -17,8 +17,8 @@ namespace e_CarSharing.Models
 
         [ForeignKey("RegularUser")]
         [Required]
-        public int RegularUserId { get; set; }
-        public RegularUser RegularUser { get; set; } // the regularUser that will use the car
+        public string RegularUserId { get; set; }
+        public ApplicationUser RegularUser { get; set; } // the regularUser that will use the car
 
         [ForeignKey("Vehicle")]
         [Required]

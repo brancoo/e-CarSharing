@@ -229,6 +229,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\VehiclesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -239,6 +240,10 @@
     <Compile Include="Migrations\201911021703241_FinalModel.cs" />
     <Compile Include="Migrations\201911021703241_FinalModel.Designer.cs">
       <DependentUpon>201911021703241_FinalModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911042204316_addedApplicationUser.cs" />
+    <Compile Include="Migrations\201911042204316_addedApplicationUser.Designer.cs">
+      <DependentUpon>201911042204316_addedApplicationUser.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -352,6 +357,11 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Vehicles\Create.cshtml" />
+    <Content Include="Views\Vehicles\Delete.cshtml" />
+    <Content Include="Views\Vehicles\Details.cshtml" />
+    <Content Include="Views\Vehicles\Edit.cshtml" />
+    <Content Include="Views\Vehicles\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -371,6 +381,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911021703241_FinalModel.resx">
       <DependentUpon>201911021703241_FinalModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911042204316_addedApplicationUser.resx">
+      <DependentUpon>201911042204316_addedApplicationUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
