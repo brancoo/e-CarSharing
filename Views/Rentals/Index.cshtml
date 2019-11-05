@@ -1,0 +1,69 @@
+﻿@model IEnumerable<e_CarSharing.Models.Rental>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Delivery.RentalId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RegularUser.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vehicle.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VehicleStation.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RentalDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RentalDeliveryDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DeliveryId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Delivery.RentalId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RegularUser.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Vehicle.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VehicleStation.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RentalDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RentalDeliveryDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DeliveryId)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.RentalId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.RentalId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.RentalId })
+        </td>
+    </tr>
+}
+
+</table>

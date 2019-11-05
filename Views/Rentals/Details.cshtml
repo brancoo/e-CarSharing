@@ -1,0 +1,74 @@
+﻿@model e_CarSharing.Models.Rental
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Rental</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Delivery.RentalId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Delivery.RentalId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RegularUser.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RegularUser.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Vehicle.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vehicle.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VehicleStation.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VehicleStation.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RentalDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RentalDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RentalDeliveryDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RentalDeliveryDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeliveryId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeliveryId)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.RentalId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

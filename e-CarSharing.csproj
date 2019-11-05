@@ -229,6 +229,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RentalsController.cs" />
     <Compile Include="Controllers\VehiclesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -244,6 +245,18 @@
     <Compile Include="Migrations\201911042204316_addedApplicationUser.cs" />
     <Compile Include="Migrations\201911042204316_addedApplicationUser.Designer.cs">
       <DependentUpon>201911042204316_addedApplicationUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911051650510_addVirtualToDeliveryAndRental.cs" />
+    <Compile Include="Migrations\201911051650510_addVirtualToDeliveryAndRental.Designer.cs">
+      <DependentUpon>201911051650510_addVirtualToDeliveryAndRental.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911051700164_addVirtualToDeliveryAndRental1.cs" />
+    <Compile Include="Migrations\201911051700164_addVirtualToDeliveryAndRental1.Designer.cs">
+      <DependentUpon>201911051700164_addVirtualToDeliveryAndRental1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911051704386_addVirtualToDeliveryAndRental2.cs" />
+    <Compile Include="Migrations\201911051704386_addVirtualToDeliveryAndRental2.Designer.cs">
+      <DependentUpon>201911051704386_addVirtualToDeliveryAndRental2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -362,6 +375,11 @@
     <Content Include="Views\Vehicles\Details.cshtml" />
     <Content Include="Views\Vehicles\Edit.cshtml" />
     <Content Include="Views\Vehicles\Index.cshtml" />
+    <Content Include="Views\Rentals\Create.cshtml" />
+    <Content Include="Views\Rentals\Delete.cshtml" />
+    <Content Include="Views\Rentals\Details.cshtml" />
+    <Content Include="Views\Rentals\Edit.cshtml" />
+    <Content Include="Views\Rentals\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -384,6 +402,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911042204316_addedApplicationUser.resx">
       <DependentUpon>201911042204316_addedApplicationUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911051650510_addVirtualToDeliveryAndRental.resx">
+      <DependentUpon>201911051650510_addVirtualToDeliveryAndRental.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911051700164_addVirtualToDeliveryAndRental1.resx">
+      <DependentUpon>201911051700164_addVirtualToDeliveryAndRental1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911051704386_addVirtualToDeliveryAndRental2.resx">
+      <DependentUpon>201911051704386_addVirtualToDeliveryAndRental2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -538,3 +538,6 @@ C:\Users\alexa\Desktop\e-CarSharing\obj\Debug\e-CarSharing.csproj.CopyComplete
 C:\Users\alexa\Desktop\e-CarSharing\obj\Debug\e-CarSharing.dll
 C:\Users\alexa\Desktop\e-CarSharing\obj\Debug\e-CarSharing.pdb
 C:\Users\alexa\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.addedApplicationUser.resources
+C:\Users\alexa\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.addVirtualToDeliveryAndRental.resources
+C:\Users\alexa\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.addVirtualToDeliveryAndRental1.resources
+C:\Users\alexa\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.addVirtualToDeliveryAndRental2.resources

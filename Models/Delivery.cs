@@ -15,7 +15,7 @@ namespace e_CarSharing.Models
         [Key, ForeignKey("Rental")]
         [Required]
         public int RentalId { get; set; }
-        public Rental Rental { get; set; }
+        public virtual Rental Rental { get; set; }
 
         public Delivery()
         {

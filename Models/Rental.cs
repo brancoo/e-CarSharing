@@ -13,7 +13,7 @@ namespace e_CarSharing.Models
 
         [Required(ErrorMessage = "You must say when you want to deliver the car!")]
         [DataType(DataType.DateTime)]
-        public DateTime RentalDeliveryDate { get; set; } // expected vehicle's time delivery
+        public DateTime DeliveryExpectedDate { get; set; } // expected vehicle's time delivery
 
         [ForeignKey("RegularUser")]
         [Required]
@@ -30,9 +30,9 @@ namespace e_CarSharing.Models
         public int VehicleStationId { get; set; }
         public VehicleStation VehicleStation { get; set; } //where the RegularUser have to leave the car (the destination)
 
-        [ForeignKey("Delivery")]
+        //[ForeignKey("Delivery")]
         public int DeliveryId { get; set; }
-        public Delivery Delivery { get; set; }
+        public virtual Delivery Delivery { get; set; }
 
         public Rental()
         {
