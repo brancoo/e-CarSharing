@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using e_CarSharing.Models;
+using Microsoft.AspNet.Identity;
 
 namespace e_CarSharing.Controllers
 {
@@ -38,7 +39,7 @@ namespace e_CarSharing.Controllers
         }
 
         // GET: Vehicles/Create
-        [AllowAnonymous]
+        [Authorize(Roles = "Owner")]
         public ActionResult Create()
         {
             ViewBag.VehicleStationId = new SelectList(db.VehicleStations, "VehicleStationId", "Name");
@@ -49,12 +50,15 @@ namespace e_CarSharing.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Owner")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "VehicleId,Name,VehicleType,OwnerId,VehicleStationId,BeingUsed")] Vehicle vehicle)
         {
             if (ModelState.IsValid)
             {
                 vehicle.BeingUsed = false;
+                vehicle.OwnerId = User.Identity.GetUserId();
+                vehicle.Owner = db.Users.FirstOrDefault(x => x.Id == vehicle.OwnerId);
                 VehicleStation posto = db.VehicleStations.FirstOrDefault(x => x.VehicleStationId == vehicle.VehicleStationId);  //vai buscar o posto onde queremos adicionar o veiculo
                 posto.Vehicles.Add(vehicle);    //adicionamos o veiculo que foi criado a lista de veiculos do posto
                 db.Entry(posto).State = EntityState.Modified;   //atualiza os dados do posto
