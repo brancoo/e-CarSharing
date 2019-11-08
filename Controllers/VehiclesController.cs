@@ -19,7 +19,8 @@ namespace e_CarSharing.Controllers
         // GET: Vehicles
         public ActionResult Index()
         {
-            var vehicles = db.Vehicles.Include(v => v.Owner).Include(v => v.VehicleStation);
+            var userID = User.Identity.GetUserId();
+            var vehicles = db.Vehicles.Where(x => x.OwnerId == userID).Include(v => v.Owner).Include(v => v.VehicleStation);
             return View(vehicles.ToList());
         }
 
@@ -85,7 +86,6 @@ namespace e_CarSharing.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.OwnerId = new SelectList(db.Owner, "OwnerId", "Name", vehicle.OwnerId);
             ViewBag.VehicleStationId = new SelectList(db.VehicleStations, "VehicleStationId", "Name", vehicle.VehicleStationId);
             return View(vehicle);
         }
@@ -95,12 +95,13 @@ namespace e_CarSharing.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "VehicleId,Name,VehicleType,OwnerId,VehicleStationId,BeingUsed")] Vehicle vehicle)
+        public async Task<ActionResult> Edit([Bind(Include = "VehicleId,Name,OwnerId,VehicleType,VehicleStationId")] Vehicle vehicle)
         {
             if (ModelState.IsValid)
             {
+                vehicle.OwnerId = User.Identity.GetUserId();
                 db.Entry(vehicle).State = EntityState.Modified;
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             ViewBag.OwnerId = new SelectList(db.Owner, "OwnerId", "Name", vehicle.OwnerId);
