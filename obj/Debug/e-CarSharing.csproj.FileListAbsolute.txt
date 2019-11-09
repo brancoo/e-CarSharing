@@ -133,16 +133,11 @@ C:\Users\Branco\Desktop\e-CarSharing\bin\roslyn\System.Diagnostics.StackTrace.dl
 C:\Users\Branco\Desktop\e-CarSharing\bin\roslyn\System.IO.Compression.dll
 C:\Users\Branco\Desktop\e-CarSharing\bin\roslyn\System.IO.FileSystem.dll
 C:\Users\Branco\Desktop\e-CarSharing\bin\roslyn\System.IO.FileSystem.Primitives.dll
-C:\Users\Branco\Desktop\e-CarSharing\bin\roslyn\System.IO.Pipes.AccessControl.dll
-C:\Users\Branco\Desktop\e-CarSharing\bin\roslyn\System.IO.Pipes.dll
 C:\Users\Branco\Desktop\e-CarSharing\bin\roslyn\System.Reflection.Metadata.dll
-C:\Users\Branco\Desktop\e-CarSharing\bin\roslyn\System.Security.AccessControl.dll
-C:\Users\Branco\Desktop\e-CarSharing\bin\roslyn\System.Security.Claims.dll
 C:\Users\Branco\Desktop\e-CarSharing\bin\roslyn\System.Security.Cryptography.Algorithms.dll
 C:\Users\Branco\Desktop\e-CarSharing\bin\roslyn\System.Security.Cryptography.Encoding.dll
 C:\Users\Branco\Desktop\e-CarSharing\bin\roslyn\System.Security.Cryptography.Primitives.dll
 C:\Users\Branco\Desktop\e-CarSharing\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
-C:\Users\Branco\Desktop\e-CarSharing\bin\roslyn\System.Security.Principal.Windows.dll
 C:\Users\Branco\Desktop\e-CarSharing\bin\roslyn\System.Text.Encoding.CodePages.dll
 C:\Users\Branco\Desktop\e-CarSharing\bin\roslyn\System.ValueTuple.dll
 C:\Users\Branco\Desktop\e-CarSharing\bin\roslyn\System.Xml.ReaderWriter.dll
@@ -543,3 +538,9 @@ C:\Users\alexa\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.addVirtual
 C:\Users\alexa\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.addVirtualToDeliveryAndRental2.resources
 C:\Users\alexa\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.changeRequiredAttributes.resources
 C:\Users\alexa\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.AddVehicleTypeToRentals.resources
+C:\Users\Branco\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.addedApplicationUser.resources
+C:\Users\Branco\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.addVirtualToDeliveryAndRental.resources
+C:\Users\Branco\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.addVirtualToDeliveryAndRental1.resources
+C:\Users\Branco\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.addVirtualToDeliveryAndRental2.resources
+C:\Users\Branco\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.changeRequiredAttributes.resources
+C:\Users\Branco\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.AddVehicleTypeToRentals.resources

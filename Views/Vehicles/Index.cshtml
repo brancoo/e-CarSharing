@@ -13,16 +13,13 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Owner.Email)
+            @Html.DisplayName("Vehicle")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.VehicleStation.Name)
+            @Html.DisplayName("Vehicle Type")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.VehicleType)
+            @Html.DisplayName("Vehicle Station")
         </th>
         <th>
             @Html.DisplayNameFor(model => model.BeingUsed)
@@ -31,28 +28,25 @@
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Owner.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.VehicleStation.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.VehicleType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BeingUsed)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.VehicleId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.VehicleId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.VehicleId })
-        </td>
-    </tr>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.VehicleType)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.VehicleStation.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.BeingUsed)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.VehicleId }) |
+        @Html.ActionLink("Details", "Details", new { id = item.VehicleId }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.VehicleId })
+    </td>
+</tr>
 }
 
 </table>

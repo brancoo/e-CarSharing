@@ -63,26 +63,26 @@ namespace e_CarSharing.Controllers
         {
             if (ModelState.IsValid)
             {
-                Vehicle aux = db.Vehicles.FirstOrDefault(x => x.VehicleId == rental.VehicleId);
-                if (aux.VehicleType != rental.VehicleType)
+                Vehicle vehicle = db.Vehicles.FirstOrDefault(x => x.VehicleId == rental.VehicleId);
+                if (vehicle.VehicleType != rental.VehicleType)
                 {
                     ViewBag.VehicleStationId = new SelectList(db.VehicleStations.Where(x => x.Vehicles.Count != 0), "VehicleStationId", "Name");
                     ViewBag.VehicleId = new SelectList(db.Vehicles.Where(x => x.BeingUsed == false), "VehicleId", "Name");
                     return View(rental);
                 }
-                VehicleStation aux2 = db.VehicleStations.FirstOrDefault(x => x.VehicleStationId == rental.VehicleStationId);
-                foreach (Vehicle v in aux2.Vehicles)
+                VehicleStation vehicleStation = db.VehicleStations.FirstOrDefault(x => x.VehicleStationId == rental.VehicleStationId);
+                foreach (Vehicle v in vehicleStation.Vehicles)
                 {
                     if (v.VehicleId == rental.VehicleId)
                     {
-                        aux.BeingUsed = true;
+                        vehicle.BeingUsed = true;
                         rental.RegularUserId = User.Identity.GetUserId();
                         rental.RegularUser = db.Users.FirstOrDefault(x => x.Id == rental.RegularUserId);
-                        rental.Vehicle = aux;
+                        rental.Vehicle = vehicle;
                         rental.VehicleStationId = rental.VehicleStationId;
-                        rental.VehicleStation = aux2;
+                        rental.VehicleStation = vehicleStation;
                         db.Rentals.Add(rental);
-                        db.Entry(aux).State = EntityState.Modified;
+                        db.Entry(vehicle).State = EntityState.Modified;
                         await db.SaveChangesAsync();
                         return RedirectToAction("Index");
                     }

@@ -35,28 +35,13 @@ namespace e_CarSharing.Migrations
                 }
             }
 
-            IList<VehicleStation> vehicleStations = new List<VehicleStation>();
-
-            vehicleStations.Add(new VehicleStation()
-            {
-                VehicleStationId = 1,
-                Name = "Estação A",
-                City = "Coimbra",
-                Latitude = -36.49517,
-                Longetide = -137.20044
-            });
-            vehicleStations.Add(new VehicleStation()
-            {
-                VehicleStationId = 2,
-                Name = "Estação B",
-                City = "Coimbra",
-                Latitude = -27.40517,
-                Longetide = -101.28984
-            });
-            foreach (VehicleStation vehicleStation in vehicleStations)
-                context.VehicleStations.Add(vehicleStation);
-
-            base.Seed(context);
+            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('BankAccounts', RESEED, 0)");
+            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('Owners', RESEED, 0)");
+            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('RegularUsers', RESEED, 0)");
+            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('Rentals', RESEED, 0)");
+            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('Vehicles', RESEED, 0)");
+            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('VehicleStations', RESEED, 0)");
+            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('Deliveries', RESEED, 0)");
         }
     }
 }

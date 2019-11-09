@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using e_CarSharing.Models;
 using Microsoft.AspNet.Identity;
 
 namespace e_CarSharing.Controllers
 {
+    [Authorize(Roles = "Owner")]
     public class VehiclesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -40,7 +38,6 @@ namespace e_CarSharing.Controllers
         }
 
         // GET: Vehicles/Create
-        [Authorize(Roles = "Owner")]
         public ActionResult Create()
         {
             ViewBag.VehicleStationId = new SelectList(db.VehicleStations, "VehicleStationId", "Name");
@@ -51,7 +48,6 @@ namespace e_CarSharing.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Authorize(Roles = "Owner")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "VehicleId,Name,VehicleType,OwnerId,VehicleStationId,BeingUsed")] Vehicle vehicle)
         {
