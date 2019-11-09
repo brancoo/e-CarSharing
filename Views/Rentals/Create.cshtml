@@ -8,27 +8,28 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-
+    
 <div class="form-horizontal">
     <h4>Rental</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
     <div class="form-group">
-        @Html.LabelFor(model => model.RentalDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.VehicleId, "VehicleId", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.RentalDate, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.RentalDate, "", new { @class = "text-danger" })
+            @Html.DropDownList("VehicleId", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.VehicleId, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.DeliveryExpectedDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.VehicleType, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.DeliveryExpectedDate, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DeliveryExpectedDate, "", new { @class = "text-danger" })
+            @Html.EnumDropDownListFor(model => model.VehicleType, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.VehicleType, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -40,20 +41,6 @@
         </div>
     </div>
 
-    <div id="Identifier" class="form-group">
-        @Html.LabelFor(m => m.Vehicle.VehicleType, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.EnumDropDownListFor(m => m.Vehicle.VehicleType)
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.VehicleId, "VehicleId", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("VehicleId", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.VehicleId, "", new { @class = "text-danger" })
-        </div>
-    </div>
 
 
     <div class="form-group">
@@ -70,110 +57,4 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-
-
-    @*<script type="text/javascript">
-                $('#VehicleStationId').on('change', function () {
-                $('#VehicleStationId').change(function () {
-                    var StationID = $('#VehicleStationId').val();
-                    console.log(StationID);
-                    $('#VehicleId option').each(function () {
-                        console.log("id " + $(this).val());
-                        if ($(this).val() == StationID || $(this).val() == "Choose Vehicle") {
-                            $(this).show();
-                        }
-                        else
-                            $(this).hide();
-                    });
-                });
-            });
-
-        </script>*@
-
-
-    @*<script>
-            $(function () {
-                $("#VehicleStationId").change(function () {
-                    console.log($(this).val());
-                    $.get("/Rentals/FillVehicles", { VehicleStationId: $("#VehicleStationId").val() }, function (data) {
-                        console.log("aqui as a sas");
-                        debugger
-                        $.each(data, function (index, value) {
-                            console.log("asasa gente asdasd");
-                            $("Vehicle").append('<option value="' + value.Value + '">' + value.Text + '</option>')
-                        });
-                    })
-                });
-            });
-        </script>*@
-
-
-
-
-
-    <script>
-
-    </script>
-
-    <script type="text/javascript">
-        function FillVehicles() {
-            var StationId = $('#VehicleStationId').val();
-            @*$.ajax({
-                //url: "/Rentals/FillVehicles?VehicleStationId=" + StationId,
-                url: '@Url.Action("FillVehicles")',
-                data: StationId,
-                success: function (vehicles) {
-                    console.log(vehicles);
-                    $("#VehicleId").append(vehicles);
-                    $.each(vehicles, function (index, value) {
-                        console.log(value);
-                        //$("#VehicleId").append(
-                        //  $('<option></option>').val(value.VehicleId));
-                        $("Vehicle").append('<option value="' + value.Value + '">' + value.Text + '</option>');
-                    });
-                },
-                failure: function (response) {
-                    console.log("Failure");
-                },
-                error: function (vehicles) {
-                    debugger
-                    var errors = vehicles.responseJSON;
-                    console.log(errors);
-                }
-            });*@
-            $.ajax({
-                url: '/Rentals/FillVehicles',
-                type: 'GET',
-                contentType: 'application/json; charset=utf-8',
-                data: { ID: StationId },
-                success: function (response) {
-                    console.log("success");
-                    console.log(response);
-                    debugger
-                },
-                error: function (error) {
-                    $(this).remove();
-                    console.error(error);
-                }
-            });
-        }
-    </script>
-
-
-
-
-
-
-    @*<script type="text/javascript">
-            function FillVehicles() {
-                $("#VehicleStationId").change(function () {
-                    $.get("/Rentals/FillVehicles", { VehicleStationId: $("#VehicleStationId").val() }, function (response) {
-                        $("#VehicleId").empty();
-                        $.each(response, function (index, value) {
-                            $("#VehicleId").append("<option value = '" + value.VehicleId + "'>" + value.Name + "</option>")
-                        });
-                    });
-                })
-            }
-        </script>*@
 }

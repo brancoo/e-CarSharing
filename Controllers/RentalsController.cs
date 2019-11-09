@@ -5,9 +5,11 @@ using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using e_CarSharing.Models;
+using Microsoft.AspNet.Identity;
 
 namespace e_CarSharing.Controllers
 {
@@ -16,9 +18,12 @@ namespace e_CarSharing.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Rentals
+        [Authorize(Roles ="User")]
         public ActionResult Index()
         {
-            var rentals = db.Rentals.Include(r => r.Delivery).Include(r => r.RegularUser).Include(r => r.Vehicle).Include(r => r.VehicleStation);
+
+            var userID = User.Identity.GetUserId();
+            var rentals = db.Rentals.Where(x => x.RegularUserId == userID).Include(r => r.Vehicle).Include(r => r.VehicleStation);
             return View(rentals.ToList());
         }
 
@@ -43,7 +48,6 @@ namespace e_CarSharing.Controllers
         {
             ViewBag.VehicleStationId = new SelectList(db.VehicleStations.Where(x => x.Vehicles.Count != 0), "VehicleStationId", "Name");
             ViewBag.VehicleId = new SelectList(db.Vehicles.Where(x => x.BeingUsed == false), "VehicleId", "Name");
-
             return View();
         }
 
@@ -53,35 +57,43 @@ namespace e_CarSharing.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "RentalDate,RentalDeliveryDate,VehicleId,VehicleStationId,Vehicle.VehicleType")] Rental rental)
+        public async Task<ActionResult> Create(Rental rental)
         {
             if (ModelState.IsValid)
             {
-                var veiculo = db.Vehicles.Where(x => x.VehicleId == rental.VehicleId).FirstOrDefault();
-                if (veiculo.VehicleType != rental.Vehicle.VehicleType)
+                Vehicle aux = db.Vehicles.FirstOrDefault(x => x.VehicleId == rental.VehicleId);
+                if (aux.VehicleType != rental.VehicleType)
                 {
-                    ViewBag.Message = "Vehicle is not of the VehicleType selected!";
+                    ViewBag.VehicleStationId = new SelectList(db.VehicleStations.Where(x => x.Vehicles.Count != 0), "VehicleStationId", "Name");
+                    ViewBag.VehicleId = new SelectList(db.Vehicles.Where(x => x.BeingUsed == false), "VehicleId", "Name");
                     return View(rental);
                 }
-                var posto = db.VehicleStations.Where(x => x.VehicleStationId == rental.VehicleStationId).FirstOrDefault();
-
-                foreach (Vehicle v in posto.Vehicles)
+                VehicleStation aux2 = db.VehicleStations.FirstOrDefault(x => x.VehicleStationId == rental.VehicleStationId);
+                foreach (Vehicle v in aux2.Vehicles)
                 {
-                    if(v == veiculo)
+                    if (v.VehicleId == rental.VehicleId)
                     {
-                db.Rentals.Add(rental);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                        aux.BeingUsed = true;
+                        rental.RegularUserId = User.Identity.GetUserId();
+                        rental.RegularUser = db.Users.FirstOrDefault(x => x.Id == rental.RegularUserId);
+                        rental.Vehicle = aux;
+                        rental.VehicleStationId = rental.VehicleStationId;
+                        rental.VehicleStation = aux2;
+                        db.Rentals.Add(rental);
+                        db.Entry(aux).State = EntityState.Modified;
+                        await db.SaveChangesAsync();
+                        return RedirectToAction("Index");
                     }
                 }
-                ViewBag.Message = "Station selected has no Vehicle selected";
+                ViewBag.VehicleStationId = new SelectList(db.VehicleStations.Where(x => x.Vehicles.Count != 0), "VehicleStationId", "Name");
+                ViewBag.VehicleId = new SelectList(db.Vehicles.Where(x => x.BeingUsed == false), "VehicleId", "Name");
                 return View(rental);
-                
             }
 
-            ViewBag.VehicleStationId = new SelectList(db.VehicleStations, "VehicleStationId", "Name", rental.VehicleStationId);
-            ViewBag.VehicleId = new SelectList(db.Vehicles, "VehicleId", "Name", rental.VehicleId);
+            ViewBag.VehicleStationId = new SelectList(db.VehicleStations.Where(x => x.Vehicles.Count != 0), "VehicleStationId", "Name");
+            ViewBag.VehicleId = new SelectList(db.Vehicles.Where(x => x.BeingUsed == false), "VehicleId", "Name");
 
             return View(rental);
         }

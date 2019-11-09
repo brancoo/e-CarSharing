@@ -185,7 +185,6 @@ namespace e_CarSharing.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    await UserManager.AddToRolesAsync(user.Id, model.Role);
                     var aux = context.BankEntity.Add(new BankAccount() { BankAccountNumber = model.BankAccountNumber, BankName = model.BankName});
                     if (model.Role == "Owner")
                     {
@@ -194,6 +193,7 @@ namespace e_CarSharing.Controllers
                     else
                         context.RegularUser.Add(new RegularUser() { Name = model.Name, City = model.City, BankAccountId = aux.BankAccountId, BankAccount = aux });
                     await context.SaveChangesAsync();
+                    await this.UserManager.AddToRolesAsync(user.Id, model.Role);
 
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -202,7 +202,7 @@ namespace e_CarSharing.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Manage");
+                    return RedirectToAction("Create", "Vehicle");
                 }
                 ViewBag.roles = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin"))
                                           .ToList(), "Name", "Name");

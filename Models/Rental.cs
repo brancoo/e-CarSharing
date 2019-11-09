@@ -16,27 +16,29 @@ namespace e_CarSharing.Models
         public DateTime DeliveryExpectedDate { get; set; } // expected vehicle's time delivery
 
         [ForeignKey("RegularUser")]
-        [Required]
+        //[Required]
         public string RegularUserId { get; set; }
         public ApplicationUser RegularUser { get; set; } // the regularUser that will use the car
 
         [ForeignKey("Vehicle")]
-        [Required]
         public int VehicleId { get; set; }
         public Vehicle Vehicle { get; set; }
 
         [ForeignKey("VehicleStation")]
-        [Required]
         public int VehicleStationId { get; set; }
         public VehicleStation VehicleStation { get; set; } //where the RegularUser have to leave the car (the destination)
 
-        //[ForeignKey("Delivery")]
         public int DeliveryId { get; set; }
         public virtual Delivery Delivery { get; set; }
+
+        [Required(ErrorMessage = "You must declare what type of vehicle you own!")]
+        public VehicleType VehicleType { get; set; }            //NAO REMOVER -> FALAR COM O ALEX PRIMEIRO
 
         public Rental()
         {
             this.RentalDate = DateTime.Now;
+            this.DeliveryExpectedDate = DateTime.Now;
+            this.Vehicle = new Vehicle();
             this.Vehicle.BeingUsed = true;
         }
     }

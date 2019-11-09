@@ -57,7 +57,6 @@ namespace e_CarSharing.Controllers
         {
             if (ModelState.IsValid)
             {
-                vehicle.BeingUsed = false;
                 vehicle.OwnerId = User.Identity.GetUserId();
                 vehicle.Owner = db.Users.FirstOrDefault(x => x.Id == vehicle.OwnerId);
                 VehicleStation posto = db.VehicleStations.FirstOrDefault(x => x.VehicleStationId == vehicle.VehicleStationId);  //vai buscar o posto onde queremos adicionar o veiculo

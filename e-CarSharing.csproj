@@ -259,6 +259,14 @@
     <Compile Include="Migrations\201911051704386_addVirtualToDeliveryAndRental2.Designer.cs">
       <DependentUpon>201911051704386_addVirtualToDeliveryAndRental2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911091518546_changeRequiredAttributes.cs" />
+    <Compile Include="Migrations\201911091518546_changeRequiredAttributes.Designer.cs">
+      <DependentUpon>201911091518546_changeRequiredAttributes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911091558177_AddVehicleTypeToRentals.cs" />
+    <Compile Include="Migrations\201911091558177_AddVehicleTypeToRentals.Designer.cs">
+      <DependentUpon>201911091558177_AddVehicleTypeToRentals.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BankAccount.cs" />
@@ -449,11 +457,11 @@
     <Content Include="Views\Vehicles\Details.cshtml" />
     <Content Include="Views\Vehicles\Edit.cshtml" />
     <Content Include="Views\Vehicles\Index.cshtml" />
-    <Content Include="Views\Rentals\Create.cshtml" />
     <Content Include="Views\Rentals\Delete.cshtml" />
     <Content Include="Views\Rentals\Details.cshtml" />
     <Content Include="Views\Rentals\Edit.cshtml" />
     <Content Include="Views\Rentals\Index.cshtml" />
+    <Content Include="Views\Rentals\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -485,6 +493,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911051704386_addVirtualToDeliveryAndRental2.resx">
       <DependentUpon>201911051704386_addVirtualToDeliveryAndRental2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911091518546_changeRequiredAttributes.resx">
+      <DependentUpon>201911091518546_changeRequiredAttributes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911091558177_AddVehicleTypeToRentals.resx">
+      <DependentUpon>201911091558177_AddVehicleTypeToRentals.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
