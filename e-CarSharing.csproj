@@ -227,6 +227,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DeliveriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RentalsController.cs" />
@@ -266,6 +267,10 @@
     <Compile Include="Migrations\201911091558177_AddVehicleTypeToRentals.cs" />
     <Compile Include="Migrations\201911091558177_AddVehicleTypeToRentals.Designer.cs">
       <DependentUpon>201911091558177_AddVehicleTypeToRentals.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911131103340_updateRequired.cs" />
+    <Compile Include="Migrations\201911131103340_updateRequired.Designer.cs">
+      <DependentUpon>201911131103340_updateRequired.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -462,6 +467,12 @@
     <Content Include="Views\Rentals\Edit.cshtml" />
     <Content Include="Views\Rentals\Index.cshtml" />
     <Content Include="Views\Rentals\Create.cshtml" />
+    <Content Include="Views\Deliveries\Create.cshtml" />
+    <Content Include="Views\Deliveries\Delete.cshtml" />
+    <Content Include="Views\Deliveries\Details.cshtml" />
+    <Content Include="Views\Deliveries\Edit.cshtml" />
+    <Content Include="Views\Deliveries\Index.cshtml" />
+    <Content Include="Views\Deliveries\DeliveryVehicle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -499,6 +510,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911091558177_AddVehicleTypeToRentals.resx">
       <DependentUpon>201911091558177_AddVehicleTypeToRentals.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911131103340_updateRequired.resx">
+      <DependentUpon>201911131103340_updateRequired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -20,9 +20,9 @@ namespace e_CarSharing.Models
         public Delivery()
         {
             this.DeliveryDate = DateTime.Now;
-            this.Rental.Vehicle.BeingUsed = false;
-            this.Rental.Vehicle.VehicleStation = this.Rental.VehicleStation;
-            this.Rental.VehicleStationId = this.Rental.VehicleStationId;
+            //this.Rental.Vehicle.BeingUsed = false;
+            //this.Rental.Vehicle.VehicleStation = this.Rental.VehicleStation;
+            //this.Rental.VehicleStationId = this.Rental.VehicleStationId;
         }
     }
 }

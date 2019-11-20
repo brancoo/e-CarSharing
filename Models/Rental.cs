@@ -37,9 +37,7 @@ namespace e_CarSharing.Models
         public Rental()
         {
             this.RentalDate = DateTime.Now;
-            this.DeliveryExpectedDate = DateTime.Now;
-            this.Vehicle = new Vehicle();
-            this.Vehicle.BeingUsed = true;
+            //this.DeliveryExpectedDate = DateTime.Now;
         }
     }
 }

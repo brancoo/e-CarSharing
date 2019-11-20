@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -17,13 +18,15 @@ namespace e_CarSharing.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+
         // GET: Rentals
         [Authorize(Roles ="User")]
         public ActionResult Index()
         {
 
             var userID = User.Identity.GetUserId();
-            var rentals = db.Rentals.Where(x => x.RegularUserId == userID).Include(r => r.Vehicle).Include(r => r.VehicleStation);
+            var rentals = db.Rentals.Include(x=>x.Vehicle).Include(x=>x.VehicleStation).Where(x=>x.RegularUserId == userID && x.Vehicle.BeingUsed == true);
+
             return View(rentals.ToList());
         }
 
@@ -59,28 +62,30 @@ namespace e_CarSharing.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Rental rental)
+        public async Task<ActionResult> Create(Rental rental)   //async Task<ActionResult>
         {
             if (ModelState.IsValid)
             {
-                Vehicle vehicle = db.Vehicles.FirstOrDefault(x => x.VehicleId == rental.VehicleId);
+                Vehicle vehicle = db.Vehicles.Include(x=>x.Owner).Include(x=>x.VehicleStation).FirstOrDefault(x => x.VehicleId == rental.VehicleId);
                 if (vehicle.VehicleType != rental.VehicleType)
                 {
                     ViewBag.VehicleStationId = new SelectList(db.VehicleStations.Where(x => x.Vehicles.Count != 0), "VehicleStationId", "Name");
                     ViewBag.VehicleId = new SelectList(db.Vehicles.Where(x => x.BeingUsed == false), "VehicleId", "Name");
                     return View(rental);
                 }
-                VehicleStation vehicleStation = db.VehicleStations.FirstOrDefault(x => x.VehicleStationId == rental.VehicleStationId);
+                VehicleStation vehicleStation = db.VehicleStations.Include(x=>x.Vehicles).FirstOrDefault(x => x.VehicleStationId == rental.VehicleStationId);
                 foreach (Vehicle v in vehicleStation.Vehicles)
                 {
                     if (v.VehicleId == rental.VehicleId)
                     {
                         vehicle.BeingUsed = true;
-                        rental.RegularUserId = User.Identity.GetUserId();
-                        rental.RegularUser = db.Users.FirstOrDefault(x => x.Id == rental.RegularUserId);
-                        rental.Vehicle = vehicle;
-                        rental.VehicleStationId = rental.VehicleStationId;
+                        string userID = User.Identity.GetUserId();
+                        var regularUser = db.Users.Find(userID);
+                        rental.RegularUserId = userID;
+                        rental.RegularUser = regularUser;
                         rental.VehicleStation = vehicleStation;
+                        rental.Vehicle = vehicle;
+
                         db.Rentals.Add(rental);
                         db.Entry(vehicle).State = EntityState.Modified;
                         await db.SaveChangesAsync();
@@ -98,21 +103,6 @@ namespace e_CarSharing.Controllers
             return View(rental);
         }
 
-        public JsonResult FillVehicles(int ID)
-        {
-            //int VehicleStationId;
-            //var vehicles = db.Vehicles.Where(c => c.VehicleStationId == VehicleStationId);
-            //db.Configuration.ProxyCreationEnabled = false;
-            //var vehicles = db.Vehicles.Where(c => c.VehicleStationId == VehicleStationId)
-            //                        .Select(x => new SelectListItem { Value = x.VehicleId.ToString()   , Text = x.Name }).ToList();
-            //return Json(new SelectList(vehicles, "Value", "Text"));
-
-            //List<Vehicle> aux = db.Vehicles.Where(c => c.VehicleStationId == ID).ToList();
-            //return Json(aux, JsonRequestBehavior.AllowGet);
-
-            return Json(new { @success = true });
-            //return Json("fodasse", JsonRequestBehavior.AllowGet);
-        }
 
         // GET: Rentals/Edit/5
         public ActionResult Edit(int? id)

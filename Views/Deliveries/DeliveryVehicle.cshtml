@@ -1,0 +1,73 @@
+﻿@model e_CarSharing.Models.Rental
+
+@{
+    ViewBag.Title = "Delivery Vehicle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>DeliveryVehicle</h2>
+
+<h3>Are you sure you want to delivery this vehicle?</h3>
+<div>
+    <h4>Rental</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Delivery.RentalId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Delivery.RentalId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Vehicle.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vehicle.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VehicleStation.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VehicleStation.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RentalDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RentalDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeliveryExpectedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeliveryExpectedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VehicleType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VehicleType)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delivery Vehicle" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

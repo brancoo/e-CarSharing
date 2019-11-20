@@ -54,8 +54,8 @@ namespace e_CarSharing.Controllers
             if (ModelState.IsValid)
             {
                 vehicle.OwnerId = User.Identity.GetUserId();
-                vehicle.Owner = db.Users.FirstOrDefault(x => x.Id == vehicle.OwnerId);
-                VehicleStation posto = db.VehicleStations.FirstOrDefault(x => x.VehicleStationId == vehicle.VehicleStationId);  //vai buscar o posto onde queremos adicionar o veiculo
+                vehicle.Owner = db.Users.Find(vehicle.OwnerId);
+                VehicleStation posto = db.VehicleStations.Include(x=>x.Vehicles).FirstOrDefault(x=>x.VehicleStationId == vehicle.VehicleStationId);  //vai buscar o posto onde queremos adicionar o veiculo
                 posto.Vehicles.Add(vehicle);    //adicionamos o veiculo que foi criado a lista de veiculos do posto
                 db.Entry(posto).State = EntityState.Modified;   //atualiza os dados do posto
                 db.Vehicles.Add(vehicle);

@@ -544,3 +544,4 @@ C:\Users\Branco\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.addVirtua
 C:\Users\Branco\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.addVirtualToDeliveryAndRental2.resources
 C:\Users\Branco\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.changeRequiredAttributes.resources
 C:\Users\Branco\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.AddVehicleTypeToRentals.resources
+C:\Users\alexa\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.updateRequired.resources
