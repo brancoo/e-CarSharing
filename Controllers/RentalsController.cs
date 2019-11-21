@@ -25,7 +25,7 @@ namespace e_CarSharing.Controllers
         {
 
             var userID = User.Identity.GetUserId();
-            var rentals = db.Rentals.Include(x=>x.Vehicle).Include(x=>x.VehicleStation).Where(x=>x.RegularUserId == userID && x.Vehicle.BeingUsed == true);
+            var rentals = db.Rentals.Include(x=>x.Vehicle).Include(x=>x.VehicleStation).Where(x=>x.RegularUserId == userID/* && x.Vehicle.BeingUsed == true*/);
 
             return View(rentals.ToList());
         }

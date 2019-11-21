@@ -63,7 +63,7 @@ namespace e_CarSharing.Controllers
         public ActionResult Index()
         {
             var user = User.Identity.GetUserId();
-            var deliveries = db.Deliveries.Where(x=>x.Rental.RegularUserId == user).Include(d => d.Rental);
+            var deliveries = db.Deliveries.Include(d => d.Rental).Where(x => x.Rental.RegularUserId == user);
             return View(deliveries.ToList());
         }
 

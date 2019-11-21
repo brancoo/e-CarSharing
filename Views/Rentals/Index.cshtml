@@ -33,30 +33,34 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.RentalId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Vehicle.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.VehicleStation.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RentalDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DeliveryExpectedDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.VehicleType)
-        </td>
-        <td>
-            @Html.ActionLink("Delivery Vehicle", "DeliveryVehicle", "Deliveries" ,new { id=item.RentalId }, null)
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RentalId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vehicle.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VehicleStation.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RentalDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeliveryExpectedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VehicleType)
+            </td>
+            @if (item.Vehicle.BeingUsed == true)
+            {
+                <td>
+                    @Html.ActionLink("Delivery Vehicle", "DeliveryVehicle", "Deliveries", new { id = item.RentalId }, null)
+                </td>
+            }
+        </tr>
+    }
 
 </table>
