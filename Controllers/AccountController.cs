@@ -67,7 +67,23 @@ namespace e_CarSharing.Controllers
             }
         }
 
-        //
+        [Authorize(Roles = "Admin")]
+        public ActionResult ListAllOwners()
+        {
+            var owners = context.Owner.OrderBy(x => x.OwnerId);
+            return View(owners.ToList());
+        }
+
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult ListAllRegularUsers()
+        {
+            var regularUsers = context.RegularUser.OrderBy(x => x.RegularUserId);
+            return View(regularUsers.ToList());
+        }
+
+
+
         // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -153,19 +169,10 @@ namespace e_CarSharing.Controllers
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
-        { 
-            //ViewBag.Identification = new SelectList(typeof(OwnerType).GetEnumValues(), typeof(OwnerType).GetEnumValues(), typeof(OwnerType).GetEnumValues());
-
-            //return View();
-
-            //List<SelectListItem> list = new List<SelectListItem>();
-            //foreach (var role in RoleManager.Roles.Where(m=>!m.Name.Contains("Admin")))
-            //    list.Add(new SelectListItem() { Value = role.Name, Text = role.Name });
-            //ViewBag.Roles = list;
+        {        
 
             ViewBag.Roles = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin"))
                                            .ToList(), "Name", "Name");
-           
 
             ViewBag.Identification = new SelectList(typeof(OwnerType).GetEnumValues(), typeof(OwnerType).GetEnumValues(), typeof(OwnerType).GetEnumValues());
             return View();
@@ -194,13 +201,7 @@ namespace e_CarSharing.Controllers
                         context.RegularUser.Add(new RegularUser() { Name = model.Name, City = model.City, BankAccountId = aux.BankAccountId, BankAccount = aux });
                     await context.SaveChangesAsync();
                     await this.UserManager.AddToRolesAsync(user.Id, model.Role);
-
-
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    
                     return RedirectToAction("Index", "Home");
                 }
                 ViewBag.roles = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin"))

@@ -10,6 +10,7 @@ using e_CarSharing.Models;
 
 namespace e_CarSharing.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class VehicleStationsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

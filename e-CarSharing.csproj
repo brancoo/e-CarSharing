@@ -236,41 +236,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201911011919214_InitialMigration.cs" />
-    <Compile Include="Migrations\201911011919214_InitialMigration.Designer.cs">
-      <DependentUpon>201911011919214_InitialMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911021703241_FinalModel.cs" />
-    <Compile Include="Migrations\201911021703241_FinalModel.Designer.cs">
-      <DependentUpon>201911021703241_FinalModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911042204316_addedApplicationUser.cs" />
-    <Compile Include="Migrations\201911042204316_addedApplicationUser.Designer.cs">
-      <DependentUpon>201911042204316_addedApplicationUser.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911051650510_addVirtualToDeliveryAndRental.cs" />
-    <Compile Include="Migrations\201911051650510_addVirtualToDeliveryAndRental.Designer.cs">
-      <DependentUpon>201911051650510_addVirtualToDeliveryAndRental.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911051700164_addVirtualToDeliveryAndRental1.cs" />
-    <Compile Include="Migrations\201911051700164_addVirtualToDeliveryAndRental1.Designer.cs">
-      <DependentUpon>201911051700164_addVirtualToDeliveryAndRental1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911051704386_addVirtualToDeliveryAndRental2.cs" />
-    <Compile Include="Migrations\201911051704386_addVirtualToDeliveryAndRental2.Designer.cs">
-      <DependentUpon>201911051704386_addVirtualToDeliveryAndRental2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911091518546_changeRequiredAttributes.cs" />
-    <Compile Include="Migrations\201911091518546_changeRequiredAttributes.Designer.cs">
-      <DependentUpon>201911091518546_changeRequiredAttributes.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911091558177_AddVehicleTypeToRentals.cs" />
-    <Compile Include="Migrations\201911091558177_AddVehicleTypeToRentals.Designer.cs">
-      <DependentUpon>201911091558177_AddVehicleTypeToRentals.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911131103340_updateRequired.cs" />
-    <Compile Include="Migrations\201911131103340_updateRequired.Designer.cs">
-      <DependentUpon>201911131103340_updateRequired.cs</DependentUpon>
+    <Compile Include="Migrations\201911211620142_Initial.cs" />
+    <Compile Include="Migrations\201911211620142_Initial.Designer.cs">
+      <DependentUpon>201911211620142_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -473,6 +441,10 @@
     <Content Include="Views\Deliveries\Edit.cshtml" />
     <Content Include="Views\Deliveries\Index.cshtml" />
     <Content Include="Views\Deliveries\DeliveryVehicle.cshtml" />
+    <Content Include="Views\Vehicles\ListAllVehicles.cshtml" />
+    <Content Include="Views\Rentals\ListAllRentals.cshtml" />
+    <Content Include="Views\Account\ListAllOwners.cshtml" />
+    <Content Include="Views\Account\ListAllRegularUsers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -487,32 +459,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201911011919214_InitialMigration.resx">
-      <DependentUpon>201911011919214_InitialMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911021703241_FinalModel.resx">
-      <DependentUpon>201911021703241_FinalModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911042204316_addedApplicationUser.resx">
-      <DependentUpon>201911042204316_addedApplicationUser.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911051650510_addVirtualToDeliveryAndRental.resx">
-      <DependentUpon>201911051650510_addVirtualToDeliveryAndRental.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911051700164_addVirtualToDeliveryAndRental1.resx">
-      <DependentUpon>201911051700164_addVirtualToDeliveryAndRental1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911051704386_addVirtualToDeliveryAndRental2.resx">
-      <DependentUpon>201911051704386_addVirtualToDeliveryAndRental2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911091518546_changeRequiredAttributes.resx">
-      <DependentUpon>201911091518546_changeRequiredAttributes.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911091558177_AddVehicleTypeToRentals.resx">
-      <DependentUpon>201911091558177_AddVehicleTypeToRentals.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911131103340_updateRequired.resx">
-      <DependentUpon>201911131103340_updateRequired.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201911211620142_Initial.resx">
+      <DependentUpon>201911211620142_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

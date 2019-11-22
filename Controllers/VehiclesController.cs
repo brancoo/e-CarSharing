@@ -4,25 +4,36 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.Security;
 using e_CarSharing.Models;
 using Microsoft.AspNet.Identity;
 
 namespace e_CarSharing.Controllers
 {
-    [Authorize(Roles = "Owner")]
+    [Authorize(Roles = "Owner, Admin")]
     public class VehiclesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Vehicles
+        [Authorize(Roles = "Owner")]
         public ActionResult Index()
         {
-            var userID = User.Identity.GetUserId();
-            var vehicles = db.Vehicles.Where(x => x.OwnerId == userID).Include(v => v.Owner).Include(v => v.VehicleStation);
+                var userID = User.Identity.GetUserId();
+                var vehicles = db.Vehicles.Where(x => x.OwnerId == userID).Include(v => v.Owner).Include(v => v.VehicleStation);
+                return View(vehicles.ToList());            
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult ListAllVehicles()
+        {
+            var vehicles = db.Vehicles.Include(x => x.Owner).Include(x => x.VehicleStation).OrderBy(x => x.Owner.Id);
             return View(vehicles.ToList());
         }
 
+
         // GET: Vehicles/Details/5
+        [Authorize(Roles = "Owner")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -38,6 +49,7 @@ namespace e_CarSharing.Controllers
         }
 
         // GET: Vehicles/Create
+        [Authorize(Roles = "Owner")]
         public ActionResult Create()
         {
             ViewBag.VehicleStationId = new SelectList(db.VehicleStations, "VehicleStationId", "Name");
@@ -47,6 +59,7 @@ namespace e_CarSharing.Controllers
         // POST: Vehicles/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Owner")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "VehicleId,Name,VehicleType,OwnerId,VehicleStationId,BeingUsed")] Vehicle vehicle)
@@ -70,6 +83,7 @@ namespace e_CarSharing.Controllers
         }
 
         // GET: Vehicles/Edit/5
+        [Authorize(Roles = "Owner")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -88,6 +102,7 @@ namespace e_CarSharing.Controllers
         // POST: Vehicles/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Owner")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "VehicleId,Name,OwnerId,VehicleType,VehicleStationId")] Vehicle vehicle)
@@ -105,6 +120,7 @@ namespace e_CarSharing.Controllers
         }
 
         // GET: Vehicles/Delete/5
+        [Authorize(Roles = "Owner")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -120,6 +136,7 @@ namespace e_CarSharing.Controllers
         }
 
         // POST: Vehicles/Delete/5
+        [Authorize(Roles = "Owner")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

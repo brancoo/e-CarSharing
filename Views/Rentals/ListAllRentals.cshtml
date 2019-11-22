@@ -1,0 +1,77 @@
+﻿@model IEnumerable<e_CarSharing.Models.Rental>
+
+@{
+    ViewBag.Title = "ListAllRentals";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ListAllRentals</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RentalId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RegularUser.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vehicle.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VehicleStation.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RentalDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DeliveryExpectedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VehicleType)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RentalId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RegularUser.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Vehicle.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VehicleStation.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RentalDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DeliveryExpectedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VehicleType)
+        </td>
+        @if(item.Vehicle.BeingUsed == true)
+        {
+            <td>
+                Rental Not Completed - Vehicle Not Delivered
+            </td>
+        }
+        else
+        {
+            <td>
+                Rental Completed - Vehicle Delivered
+            </td>
+        }
+    </tr>
+}
+
+</table>

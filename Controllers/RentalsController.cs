@@ -14,23 +14,33 @@ using Microsoft.AspNet.Identity;
 
 namespace e_CarSharing.Controllers
 {
+    [Authorize(Roles = "User, Admin")]
     public class RentalsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
 
         // GET: Rentals
-        [Authorize(Roles ="User")]
+        [Authorize(Roles = "User")]
         public ActionResult Index()
         {
 
             var userID = User.Identity.GetUserId();
-            var rentals = db.Rentals.Include(x=>x.Vehicle).Include(x=>x.VehicleStation).Where(x=>x.RegularUserId == userID/* && x.Vehicle.BeingUsed == true*/);
+            var rentals = db.Rentals.Include(x=>x.Vehicle).Include(x=>x.VehicleStation).Where(x=>x.RegularUserId == userID);
 
             return View(rentals.ToList());
         }
 
+        [Authorize(Roles = "Admin")]
+        public ActionResult ListAllRentals()
+        {
+            var rentals = db.Rentals.Include(x => x.Vehicle).Include(x => x.VehicleStation).OrderBy(x=>x.RentalId);
+            return View(rentals.ToList());
+        }
+
+
         // GET: Rentals/Details/5
+        [Authorize(Roles = "User")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -46,7 +56,7 @@ namespace e_CarSharing.Controllers
         }
 
         //GET: Rentals/Create
-        [AllowAnonymous]
+        [Authorize(Roles = "User")]
         public ActionResult Create()
         {
             ViewBag.VehicleStationId = new SelectList(db.VehicleStations.Where(x => x.Vehicles.Count != 0), "VehicleStationId", "Name");
@@ -59,8 +69,8 @@ namespace e_CarSharing.Controllers
         // POST: Rentals/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "User")]
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(Rental rental)   //async Task<ActionResult>
         {
@@ -105,6 +115,7 @@ namespace e_CarSharing.Controllers
 
 
         // GET: Rentals/Edit/5
+        [Authorize(Roles = "User")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -125,6 +136,7 @@ namespace e_CarSharing.Controllers
         // POST: Rentals/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "User")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "RentalId,RentalDate,RentalDeliveryDate,RegularUserId,VehicleId,VehicleStationId,DeliveryId")] Rental rental)
@@ -142,6 +154,7 @@ namespace e_CarSharing.Controllers
         }
 
         // GET: Rentals/Delete/5
+        [Authorize(Roles = "User")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -157,6 +170,7 @@ namespace e_CarSharing.Controllers
         }
 
         // POST: Rentals/Delete/5
+        [Authorize(Roles = "User")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
