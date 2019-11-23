@@ -4,7 +4,7 @@
     ViewBag.Title = "Log in";
 }
 
-<div class="row" >
+<div>
     <div class="col-md-8" style="padding: 150px;width: 100%;margin: auto;">
         <section id="loginForm">
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))

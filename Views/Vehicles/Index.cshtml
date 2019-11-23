@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    <div style="margin-top: 150px">
+    <div style="margin-top: 15%">
         <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">My Vehicles</h2>
         <div class="divider-custom">
             <div class="divider-custom-line"></div>
@@ -17,16 +17,16 @@
         <table class="table">
             <tr>
                 <th>
-                    @Html.DisplayName("Vehicle")
+                    @Html.ActionLink("Vehicle ", "Index", new { sortOrder = "vehicleName" })
                 </th>
                 <th>
-                    @Html.DisplayName("Vehicle Type")
+                    @Html.ActionLink("Vehicle Type ", "Index", new { sortOrder = "vehicleType" })
                 </th>
                 <th>
                     @Html.DisplayName("Vehicle Station")
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.BeingUsed)
+                    @Html.ActionLink("Being Used ", "Index", new { sortOrder = "beingUsed" })
                 </th>
                 <th></th>
             </tr>

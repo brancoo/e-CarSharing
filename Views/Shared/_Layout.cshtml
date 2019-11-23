@@ -20,6 +20,7 @@
     <link href=@Url.Content("/Content/vendor/fontawesome-free/css/all.min.css") rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" rel="stylesheet" />
 
     <!-- Theme CSS -->
     <link href=@Url.Content("/Content/css/freelancer.min.css") rel="stylesheet">
@@ -39,36 +40,36 @@
                 Menu
                 <i class="fas fa-bars"></i>
             </button>
-           
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                @if (User.IsInRole("Owner")) //just shows this action if the user is an Owner
-                {
-                    <li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="@Url.Action("Index", "Vehicles")">My vehicles</a>
-                    </li>
-                    <li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="@Url.Action("Create", "Vehicles")">Add a new vehicle</a>
-                    </li>
-                }
-                @if (User.IsInRole("User")) //just shows this action if the user is a Regular_User
-                {
-                    <li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="@Url.Action("Create", "Rentals")">Rent a car</a>
-                    </li>
-                }
-            </ul>
-            @Html.Partial("_LoginPartial")
-        </div>
+
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    @if (User.IsInRole("Owner")) //just shows this action if the user is an Owner
+                    {
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="@Url.Action("Index", "Vehicles")">My vehicles</a>
+                        </li>
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="@Url.Action("Create", "Vehicles")">Add a new vehicle</a>
+                        </li>
+                    }
+                    @if (User.IsInRole("User")) //just shows this action if the user is a Regular_User
+                    {
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="@Url.Action("Create", "Rentals")">Rent a car</a>
+                        </li>
+                    }
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
         </div>
     </nav>
 
-
     <!-- Copyright Section -->
-    <section class="copyright py-4 text-center text-white" style="position: static;left: 0;bottom: 0;width: 100%;color: white;text-align: center;">
+    <section class="copyright py-4 text-center text-white" style="position: absolute;width: 100%;color: white;text-align: center;">
         <div class="container">
-            <small>Copyright &copy; e-CarSharing
-            <script>document.write(new Date().getFullYear())</script>
+            <small>
+                Copyright &copy; e-CarSharing
+                <script>document.write(new Date().getFullYear())</script>
             </small>
         </div>
     </section>
@@ -79,6 +80,10 @@
             <i class="fa fa-chevron-up"></i>
         </a>
     </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -93,5 +98,8 @@
 
     <!-- Custom scripts for this template -->
     <script src="js/freelancer.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
 </body>
 </html>
