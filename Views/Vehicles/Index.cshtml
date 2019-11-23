@@ -1,0 +1,61 @@
+﻿@model IEnumerable<e_CarSharing.Models.Vehicle>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div style="margin-top: 150px">
+        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">My Vehicles</h2>
+        <div class="divider-custom">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon">
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="divider-custom-line"></div>
+        </div>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayName("Vehicle")
+                </th>
+                <th>
+                    @Html.DisplayName("Vehicle Type")
+                </th>
+                <th>
+                    @Html.DisplayName("Vehicle Station")
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BeingUsed)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VehicleType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VehicleStation.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BeingUsed)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.VehicleId }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.VehicleId }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.VehicleId })
+                    </td>
+                </tr>
+            }
+        </table>
+
+        <div class="form-group">
+            <input type="submit" onclick="location.href='@Url.Action("Create", "Vehicles")'" value="Add new car" class="btn btn-primary btn-lg" style="margin: 0px auto;margin-left: 44%" />
+        </div>
+    </div>

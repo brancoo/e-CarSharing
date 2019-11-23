@@ -15,8 +15,8 @@ namespace e_CarSharing.Models
         public VehicleType VehicleType { get; set; }
 
         [ForeignKey("Owner")]
-        public int OwnerId { get; set; }
-        public Owner Owner { get; set; }
+        public string OwnerId { get; set; }
+        public ApplicationUser Owner { get; set; }
 
         [ForeignKey("VehicleStation")]
         public int VehicleStationId { get; set; }

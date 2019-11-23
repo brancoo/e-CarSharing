@@ -6,7 +6,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using e_CarSharing.Models;
-using System.Web.Security;
+using static e_CarSharing.Models.ApplicationDbContext;
 
 namespace e_CarSharing.Controllers
 {
@@ -15,6 +15,7 @@ namespace e_CarSharing.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationRoleManager _rolemanager;
         private ApplicationDbContext context;
 
         public AccountController()
@@ -22,11 +23,25 @@ namespace e_CarSharing.Controllers
             context = new ApplicationDbContext();
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationRoleManager roleManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            RoleManager = roleManager;
         }
+
+        public ApplicationRoleManager RoleManager
+        {
+            get
+            {
+                return _rolemanager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+            }
+            private set
+            {
+                _rolemanager = value;
+            }
+        }
+
 
         public ApplicationSignInManager SignInManager
         {
@@ -52,7 +67,23 @@ namespace e_CarSharing.Controllers
             }
         }
 
-        //
+        [Authorize(Roles = "Admin")]
+        public ActionResult ListAllOwners()
+        {
+            var owners = context.Owner.OrderBy(x => x.OwnerId);
+            return View(owners.ToList());
+        }
+
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult ListAllRegularUsers()
+        {
+            var regularUsers = context.RegularUser.OrderBy(x => x.RegularUserId);
+            return View(regularUsers.ToList());
+        }
+
+
+
         // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -71,7 +102,7 @@ namespace e_CarSharing.Controllers
             if (!ModelState.IsValid)
             {
                 return View(model);
-            }
+            } 
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
@@ -138,9 +169,12 @@ namespace e_CarSharing.Controllers
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
-        {
-            ViewBag.roles = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin"))
-                                            .ToList(), "Name", "Name");
+        {        
+
+            ViewBag.Roles = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin"))
+                                           .ToList(), "Name", "Name");
+
+            ViewBag.Identification = new SelectList(typeof(OwnerType).GetEnumValues(), typeof(OwnerType).GetEnumValues(), typeof(OwnerType).GetEnumValues());
             return View();
         }
 
@@ -158,18 +192,22 @@ namespace e_CarSharing.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    await this.UserManager.AddToRoleAsync(user.Id, model.Role);
+                    var aux = context.BankEntity.Add(new BankAccount() { BankAccountNumber = model.BankAccountNumber, BankName = model.BankName});
+                    if (model.Role == "Owner")
+                    {
+                        context.Owner.Add(new Owner() { Name = model.Name, City = model.City, OwnerType = model.Identification, BankAccountId = aux.BankAccountId, BankAccount = aux });
+                    }
+                    else
+                        context.RegularUser.Add(new RegularUser() { Name = model.Name, City = model.City, BankAccountId = aux.BankAccountId, BankAccount = aux });
+                    await context.SaveChangesAsync();
+                    await this.UserManager.AddToRolesAsync(user.Id, model.Role);
+                    
                     return RedirectToAction("Index", "Home");
                 }
                 ViewBag.roles = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin"))
                                           .ToList(), "Name", "Name");
+                ViewBag.Identification = new SelectList(typeof(OwnerType).GetEnumValues());
+
                 AddErrors(result);
             }
 

@@ -15,14 +15,14 @@ namespace e_CarSharing.Models
         [Key, ForeignKey("Rental")]
         [Required]
         public int RentalId { get; set; }
-        public Rental Rental { get; set; }
+        public virtual Rental Rental { get; set; }
 
         public Delivery()
         {
             this.DeliveryDate = DateTime.Now;
-            this.Rental.Vehicle.BeingUsed = false;
-            this.Rental.Vehicle.VehicleStation = this.Rental.VehicleStation;
-            this.Rental.VehicleStationId = this.Rental.VehicleStationId;
+            //this.Rental.Vehicle.BeingUsed = false;
+            //this.Rental.Vehicle.VehicleStation = this.Rental.VehicleStation;
+            //this.Rental.VehicleStationId = this.Rental.VehicleStationId;
         }
     }
 }
