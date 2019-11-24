@@ -81,7 +81,7 @@ namespace e_CarSharing.Controllers
         [Authorize(Roles = "User")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Rental rental)   //async Task<ActionResult>
+        public async Task<ActionResult> Create(Rental rental, string DeliveryExpectedDate)
         {
             if (ModelState.IsValid)
             {
@@ -104,6 +104,8 @@ namespace e_CarSharing.Controllers
                         rental.RegularUser = regularUser;
                         rental.VehicleStation = vehicleStation;
                         rental.Vehicle = vehicle;
+                        DateTime enteredDate = DateTime.Parse(DeliveryExpectedDate);
+                        rental.DeliveryExpectedDate = enteredDate;
 
                         db.Rentals.Add(rental);
                         db.Entry(vehicle).State = EntityState.Modified;
