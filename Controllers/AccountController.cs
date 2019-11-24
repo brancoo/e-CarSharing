@@ -88,6 +88,11 @@ namespace e_CarSharing.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            if (Request.IsAuthenticated)
+            {
+                returnUrl = null;
+                return View("../Home/Index");
+            }
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -169,7 +174,11 @@ namespace e_CarSharing.Controllers
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
-        {        
+        {
+            if (Request.IsAuthenticated)
+            {
+                return View("../Home/Index");
+            }
 
             ViewBag.Roles = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin"))
                                            .ToList(), "Name", "Name");
@@ -434,6 +443,7 @@ namespace e_CarSharing.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            Response.ClearHeaders();
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }
