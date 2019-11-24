@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Manage";
 }
-<div style="padding: 100px 0px 0px 0px">
+<div style="margin-top: 12%" align="center">
     <h4>Account settings</h4>
     <hr />
     <dl class="dl-horizontal">
@@ -25,6 +25,29 @@
             @Model.Logins.Count [
             @Html.ActionLink("Manage", "ManageLogins") ]
         </dd>
+        @if (User.IsInRole("Owner"))
+        {
+            <dt>Number of Vehicles:</dt>
+            <dd>@ViewBag.Count</dd>
+            <dt>Most common type of Vehicles Owned:</dt>
+            <dd>@ViewBag.CommonType</dd>
+        }
+        else if (User.IsInRole("User"))
+        {
+            <dt>Number of Rentals:</dt>
+            <dd>@ViewBag.Count</dd>
+            <dt>Most common type of Vehicles rented:</dt>
+            <dd>@ViewBag.RentalsCommonType</dd>
+        }
+        else
+        {
+            <dt>Number of Owners registered:</dt>
+            <dd>@ViewBag.OwnersCount</dd>
+            <dt>Number of Vehicles registered:</dt>
+            <dd>@ViewBag.VehiclesCount</dd>
+            <dt>Number of Users registered:</dt>
+            <dd>@ViewBag.UsersCount</dd>
+        }
 
     </dl>
 </div>

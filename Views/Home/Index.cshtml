@@ -2,10 +2,11 @@
     ViewBag.Title = "Home Page";
 }
 
+<link rel="Stylesheet" href="~/Content/css/slideshow.css" type="text/css" />
+
 <!-- Masthead -->
 <header class="masthead bg-primary text-white text-center" style="margin-top: 5%">
     <div class="container d-flex align-items-center flex-column">
-
         <!-- Masthead Avatar Image -->
         <img class="masthead-avatar mb-5" src="img/avataaars.svg" alt="">
 
@@ -22,7 +23,14 @@
         </div>
 
         <!-- Masthead Subheading -->
+        @if (User.IsInRole("Owner"))
+        {
+            <p class="font-weight-light mb-20">Welcome back Owner!</p>
+        }
+        else if (User.IsInRole("User"))
+        {
+            <p class="font-weight-light mb-20">Welcome back User!</p>
+        }
         <p class="masthead-subheading font-weight-light mb-0">Join us If you want to take a ride!</p>
-
     </div>
 </header>
