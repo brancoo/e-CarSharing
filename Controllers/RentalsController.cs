@@ -22,13 +22,22 @@ namespace e_CarSharing.Controllers
 
         // GET: Rentals
         [Authorize(Roles = "User")]
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
 
             var userID = User.Identity.GetUserId();
             var rentals = db.Rentals.Include(x=>x.Vehicle).Include(x=>x.VehicleStation).Where(x=>x.RegularUserId == userID);
+            //sort list and return list of vehicles by some order 
+            switch (sortOrder)
+            {
+                case "vehicleName": return View(rentals.OrderBy(v => v.Vehicle.Name).ToList());
+                case "vehicleType": return View(rentals.OrderBy(v => v.VehicleType).ToList());
+                case "rentalDate ": return View(rentals.OrderBy(v => v.RentalDate).ToList());
+                case "deliveryExpectedDate": return View(rentals.OrderBy(v => v.DeliveryExpectedDate).ToList());
+                case "vehicleStation": return View(rentals.OrderBy(v => v.VehicleStation.Name).ToList());
+                default: return View(rentals.ToList());
+            }
 
-            return View(rentals.ToList());
         }
 
         [Authorize(Roles = "Admin")]
@@ -72,7 +81,7 @@ namespace e_CarSharing.Controllers
         [Authorize(Roles = "User")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Rental rental)   //async Task<ActionResult>
+        public async Task<ActionResult> Create(Rental rental, string DeliveryExpectedDate)
         {
             if (ModelState.IsValid)
             {
@@ -95,6 +104,8 @@ namespace e_CarSharing.Controllers
                         rental.RegularUser = regularUser;
                         rental.VehicleStation = vehicleStation;
                         rental.Vehicle = vehicle;
+                        DateTime enteredDate = DateTime.Parse(DeliveryExpectedDate);
+                        rental.DeliveryExpectedDate = enteredDate;
 
                         db.Rentals.Add(rental);
                         db.Entry(vehicle).State = EntityState.Modified;

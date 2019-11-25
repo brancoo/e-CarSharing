@@ -5,62 +5,64 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+    <div style="margin-top: 150px">
+        <h2 class="page-section-heading text-center text-secondary mb-0">List of your rentals</h2>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.RentalId)
+                </th>
+                <th>
+                    @Html.ActionLink("Vehicle Name", "Index", new { sortOrder = "vehicleName" })
+                </th>
+                <th>
+                    @Html.ActionLink("Vehicle Station", "Index", new { sortOrder = "vehicleStation" })
+                </th>
+                <th>
+                    @Html.ActionLink("Rental Date ", "Index", new { sortOrder = "rentalDate" })
+                </th>
+                <th>
+                    @Html.ActionLink("Delivery Expected Date ", "Index", new { sortOrder = "deliveryExpectedDate" })
+                </th>
+                <th>
+                    @Html.ActionLink("Vehicle Type ", "Index", new { sortOrder = "vehicleType" })
+                </th>
+                <th></th>
+            </tr>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.RentalId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Vehicle.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.VehicleStation.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RentalDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DeliveryExpectedDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.VehicleType)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RentalId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vehicle.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VehicleStation.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RentalDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeliveryExpectedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VehicleType)
-            </td>
-            @if (item.Vehicle.BeingUsed == true)
+            @foreach (var item in Model)
             {
-                <td>
-                    @Html.ActionLink("Delivery Vehicle", "DeliveryVehicle", "Deliveries", new { id = item.RentalId }, null)
-                </td>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RentalId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vehicle.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VehicleStation.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RentalDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DeliveryExpectedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VehicleType)
+                    </td>
+                    @if (item.Vehicle.BeingUsed == true)
+                    {
+                        <td>
+                            @Html.ActionLink("Delivery Vehicle", "DeliveryVehicle", "Deliveries", new { id = item.RentalId }, null)
+                        </td>
+                    }
+                </tr>
             }
-        </tr>
-    }
 
-</table>
+        </table>
+
+        <div class="form-group">
+            <input type="submit" onclick="location.href='@Url.Action("Create", "Rentals")'" value="Rent a car" class="btn btn-primary btn-lg" style="margin: 0px auto;margin-left: 44%" />
+        </div>
+    </div>

@@ -17,11 +17,18 @@ namespace e_CarSharing.Controllers
 
         // GET: Vehicles
         [Authorize(Roles = "Owner")]
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
                 var userID = User.Identity.GetUserId();
                 var vehicles = db.Vehicles.Where(x => x.OwnerId == userID).Include(v => v.Owner).Include(v => v.VehicleStation);
-                return View(vehicles.ToList());            
+            //sort list and return list of vehicles by some order 
+            switch (sortOrder)
+            {
+                case "vehicleName": return View(vehicles.OrderBy(v => v.Name).ToList());
+                case "vehicleType": return View(vehicles.OrderBy(v => v.VehicleType).ToList());
+                case "beingUsed": return View(vehicles.OrderBy(v => !v.BeingUsed).ToList());
+                default: return View(vehicles.ToList());
+            }
         }
 
         [Authorize(Roles = "Admin")]
@@ -45,6 +52,10 @@ namespace e_CarSharing.Controllers
             {
                 return HttpNotFound();
             }
+
+            //if possible return the full name of the regularUser
+            var regularUser = db.Rentals.Where(r => r.VehicleId == id && r.Vehicle.BeingUsed).Select(x => x.RegularUser.UserName).FirstOrDefault();
+            ViewBag.regularUser = regularUser;
             return View(vehicle);
         }
 

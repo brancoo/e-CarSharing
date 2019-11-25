@@ -88,6 +88,11 @@ namespace e_CarSharing.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            if (Request.IsAuthenticated)
+            {
+                returnUrl = null;
+                return View("../Home/Index");
+            }
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -169,10 +174,13 @@ namespace e_CarSharing.Controllers
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
-        {        
+        {
+            if (Request.IsAuthenticated)
+            {
+                return View("../Home/Index");
+            }
 
-            ViewBag.Roles = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin"))
-                                           .ToList(), "Name", "Name");
+            ViewBag.Roles = new SelectList(context.Roles.ToList(), "Name", "Name");
 
             ViewBag.Identification = new SelectList(typeof(OwnerType).GetEnumValues(), typeof(OwnerType).GetEnumValues(), typeof(OwnerType).GetEnumValues());
             return View();
@@ -192,13 +200,18 @@ namespace e_CarSharing.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    var aux = context.BankEntity.Add(new BankAccount() { BankAccountNumber = model.BankAccountNumber, BankName = model.BankName});
+
                     if (model.Role == "Owner")
                     {
+                        var aux = context.BankEntity.Add(new BankAccount() { BankAccountNumber = model.BankAccountNumber, BankName = model.BankName });
                         context.Owner.Add(new Owner() { Name = model.Name, City = model.City, OwnerType = model.Identification, BankAccountId = aux.BankAccountId, BankAccount = aux });
                     }
-                    else
+                    if (model.Role == "User")
+                    {
+                        var aux = context.BankEntity.Add(new BankAccount() { BankAccountNumber = model.BankAccountNumber, BankName = model.BankName });
                         context.RegularUser.Add(new RegularUser() { Name = model.Name, City = model.City, BankAccountId = aux.BankAccountId, BankAccount = aux });
+                    }
+
                     await context.SaveChangesAsync();
                     await this.UserManager.AddToRolesAsync(user.Id, model.Role);
                     
@@ -434,6 +447,7 @@ namespace e_CarSharing.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            Response.ClearHeaders();
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }

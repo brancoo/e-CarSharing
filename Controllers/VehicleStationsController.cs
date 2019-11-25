@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using e_CarSharing.Models;
@@ -20,6 +21,7 @@ namespace e_CarSharing.Controllers
         {
             return View(db.VehicleStations.ToList());
         }
+
 
         // GET: VehicleStations/Details/5
         public ActionResult Details(int? id)
@@ -47,12 +49,12 @@ namespace e_CarSharing.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "VehicleStationId,Name,Latitude,Longetide,City")] VehicleStation vehicleStation)
+        public async Task<ActionResult> Create([Bind(Include = "VehicleStationId,Name,Latitude,Longetide,City")] VehicleStation vehicleStation)
         {
             if (ModelState.IsValid)
             {
                 db.VehicleStations.Add(vehicleStation);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 

@@ -5,27 +5,20 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>Vehicle</h4>
+<div style="margin-top: 15%" align="center">
+    <h4>Details of your Vehicle</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Owner.Email)
-        </dt>
+        @if (Model.BeingUsed)
+        {
+            <dt>
+                @Html.Label("Who's using it now")
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Owner.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.VehicleStation.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.VehicleStation.Name)
-        </dd>
+            <dd>
+                @ViewBag.regularUser
+            </dd>
+        }
 
         <dt>
             @Html.DisplayNameFor(model => model.Name)
@@ -53,7 +46,7 @@
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.VehicleId }) |
-    @Html.ActionLink("Back to List", "Index")
+<p style="margin-left: 46%">
+    @Html.ActionLink("Edit", "Edit", new { id = Model.VehicleId }, new {@class = "btn btn-primary btn"})
+    @Html.ActionLink("Back to List", "Index", new { @class = "btn btn-primary btn" })
 </p>

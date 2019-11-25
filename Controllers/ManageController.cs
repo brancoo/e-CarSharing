@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using e_CarSharing.Models;
+using System.Data.Entity;
 
 namespace e_CarSharing.Controllers
 {
@@ -53,6 +54,8 @@ namespace e_CarSharing.Controllers
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
+            ApplicationDbContext context = new ApplicationDbContext();
+
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
@@ -71,6 +74,29 @@ namespace e_CarSharing.Controllers
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
+            if (User.IsInRole("Owner"))
+            {
+                var vehiclesCount = context.Vehicles.Where(x => x.OwnerId == userId).Include(v => v.Owner).Include(v => v.VehicleStation).Count();
+                var mostCommonType = context.Vehicles.Where(x => x.OwnerId == userId).Include(v => v.Owner).Include(v => v.VehicleStation).GroupBy(x => x.VehicleType).OrderByDescending(x => x.Count()).Take(5).Select(x => x.Key).ToList().FirstOrDefault();
+                ViewBag.Count = vehiclesCount;
+                ViewBag.CommonType = mostCommonType;
+            }
+            else if (User.IsInRole("User"))
+            {
+                var rentalsCount = context.Rentals.Include(x => x.Vehicle).Include(x => x.VehicleStation).Where(x => x.RegularUserId == userId).Count();
+                var mostCommonTypeRentals = context.Rentals.Include(x => x.Vehicle).Include(x => x.VehicleStation).Where(x => x.RegularUserId == userId).GroupBy(x => x.VehicleType).OrderByDescending(x => x.Count()).Take(5).Select(x => x.Key).ToList().FirstOrDefault();
+                ViewBag.Count = rentalsCount;
+                ViewBag.RentalsCommonType = mostCommonTypeRentals;
+            }
+            else
+            {
+                var vehiclesCount = context.Vehicles.Select(x => x.OwnerId).Count();
+                var usersCount = context.RegularUser.Select(x => x.RegularUserId).Count(); ;
+                var ownersCount = context.Owner.Select(x => x.OwnerId).Count();
+                ViewBag.VehiclesCount = vehiclesCount;
+                ViewBag.UsersCount = usersCount;
+                ViewBag.OwnersCount = ownersCount;
+            }
             return View(model);
         }
 
