@@ -28,6 +28,7 @@ namespace e_CarSharing.Models
         public int VehicleStationId { get; set; }
         public VehicleStation VehicleStation { get; set; } //where the RegularUser have to leave the car (the destination)
 
+        [ForeignKey("Delivery")]
         public int DeliveryId { get; set; }
         public virtual Delivery Delivery { get; set; }
 

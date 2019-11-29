@@ -23,6 +23,8 @@ namespace e_CarSharing.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+
             string[] roleNames = { "Admin", "Owner", "User" };
 
             foreach (var roles in roleNames)
@@ -33,6 +35,14 @@ namespace e_CarSharing.Migrations
                     role.Name = roles;
                     roleManager.Create(role);
                 }
+            }
+
+            var user = new ApplicationUser { UserName = "admin@admin.com", Email = "admin@admin.com" };
+            var admin = userManager.Create(user, "admin");
+            if (admin.Succeeded)
+            {
+                //here we tie the new user to the role
+                userManager.AddToRole(user.Id, "Admin");
             }
 
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('BankAccounts', RESEED, 0)");

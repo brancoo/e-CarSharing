@@ -30,10 +30,8 @@ namespace e_CarSharing.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Rental>().HasOptional<Delivery>(x => x.Delivery).WithOptionalDependent(s => s.Rental).Map(p => p.MapKey("Delivery"));
 
-            modelBuilder.Entity<Rental>()
-            .HasOptional(f => f.Delivery)
-            .WithRequired(s => s.Rental);
         }
 
         public static ApplicationDbContext Create()

@@ -9,10 +9,12 @@ namespace e_CarSharing.Models
 {
     public class Delivery
     {
+        public int DeliveryId { get; set; }
+
         [DataType(DataType.DateTime)]
         public DateTime DeliveryDate { get; set; } //the actual date that the vehicle was delivered
 
-        [Key, ForeignKey("Rental")]
+        [ForeignKey("Rental")]
         [Required]
         public int RentalId { get; set; }
         public virtual Rental Rental { get; set; }

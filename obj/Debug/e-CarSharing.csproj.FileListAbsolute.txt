@@ -529,3 +529,4 @@ C:\Users\alexa\Desktop\e-CarSharing\obj\Debug\e-CarSharing.pdb
 C:\Users\alexa\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.Initial.resources
 C:\Users\alexa\Desktop\e-CarSharing\obj\Debug\e-CarSharing.csproj.GenerateResource.cache
 C:\Users\Branco\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.Initial.resources
+C:\Users\Branco\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.FinalModel.resources
