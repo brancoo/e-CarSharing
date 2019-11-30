@@ -124,7 +124,7 @@ namespace e_CarSharing.Migrations
                     })
                 .PrimaryKey(t => t.VehicleId)
                 .ForeignKey("dbo.AspNetUsers", t => t.OwnerId)
-                .ForeignKey("dbo.VehicleStations", t => t.VehicleStationId, cascadeDelete: false)
+                .ForeignKey("dbo.VehicleStations", t => t.VehicleStationId, cascadeDelete: true)
                 .ForeignKey("dbo.Owners", t => t.Owner_OwnerId)
                 .Index(t => t.OwnerId)
                 .Index(t => t.VehicleStationId)

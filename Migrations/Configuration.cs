@@ -8,6 +8,7 @@ namespace e_CarSharing.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using System.Threading.Tasks;
 
     internal sealed class Configuration : DbMigrationsConfiguration<e_CarSharing.Models.ApplicationDbContext>
     {
@@ -53,5 +54,6 @@ namespace e_CarSharing.Migrations
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('VehicleStations', RESEED, 0)");
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('Deliveries', RESEED, 0)");
         }
+
     }
 }

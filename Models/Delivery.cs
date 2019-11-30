@@ -13,6 +13,7 @@ namespace e_CarSharing.Models
 
         [DataType(DataType.DateTime)]
         public DateTime DeliveryDate { get; set; } //the actual date that the vehicle was delivered
+        public decimal RentalCost { get; set; }
 
         [ForeignKey("Rental")]
         [Required]

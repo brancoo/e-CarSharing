@@ -48,13 +48,45 @@ namespace e_CarSharing.Controllers
             Vehicle vehicle = db.Vehicles.Find(rental.VehicleId);
             vehicle.BeingUsed = false;
 
-            db.Deliveries.Add(new Delivery() {RentalId = id, Rental = rental });
+            double RentedDays = Math.Abs((DateTime.Now - rental.RentalDate).Days);
+            
+            Delivery delivery = new Delivery() { RentalId = id, Rental = rental };
+            
+            switch (rental.VehicleType)
+            {
+                case (VehicleType.BICYCLE):
+                    delivery.RentalCost = (decimal) (RentedDays * 3);
+                    break;
+                case (VehicleType.BIKE):
+                    delivery.RentalCost = (decimal)(RentedDays * 5.5);
+                    break; ;
+                case (VehicleType.CAR):
+                    delivery.RentalCost = (decimal)(RentedDays * 10);
+                    break; ;
+                case (VehicleType.SCOOTER):
+                    delivery.RentalCost = (decimal)(RentedDays * 3.5);
+                    break; ;
+            }
+
+            if (RentedDays == 0) //if the vehicle was delivered on the same day that was rented
+            {
+                delivery.RentalCost = 7.5M;
+            }
+
+            if (DateTime.Now > rental.DeliveryExpectedDate) //if the User delivered the vehicle after the expected date of delivery
+            {
+                int totalDaysDelayed = (DateTime.Now - rental.DeliveryExpectedDate).Days;
+
+                delivery.RentalCost = (decimal)(totalDaysDelayed * 7.5) + (DateTime.Now - rental.RentalDate).Days + delivery.RentalCost;  //7.5€ of fee
+            }
+
+            db.Deliveries.Add(delivery);
             db.Entry(vehicle).State = EntityState.Modified;
             db.Entry(rental).State = EntityState.Modified;
 
             await db.SaveChangesAsync();
 
-            return RedirectToAction("Index", "Rentals");
+            return RedirectToAction("Index");
         }
 
 
