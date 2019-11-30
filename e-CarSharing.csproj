@@ -496,6 +496,7 @@
     <Content Include="Views\Rentals\ListAllRentals.cshtml" />
     <Content Include="Views\Account\ListAllOwners.cshtml" />
     <Content Include="Views\Account\ListAllRegularUsers.cshtml" />
+    <Content Include="Views\Vehicles\VehiclesDeliveries.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
