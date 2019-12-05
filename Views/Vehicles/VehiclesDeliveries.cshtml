@@ -1,0 +1,66 @@
+﻿@model IEnumerable<e_CarSharing.Models.Delivery>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div style="margin-top: 15%">
+        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">My Rental Vehicles</h2>
+        <div class="divider-custom">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon">
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="divider-custom-line"></div>
+        </div>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayName("DeliveryId")
+                </th>
+                <th>
+                    @Html.DisplayName("Delivery Date")
+                </th>
+                <th>
+                    @Html.DisplayName("Vehicle Name")
+                </th>
+                <th>
+                    @Html.DisplayName("Vehicle Type")
+                </th>
+                <th>
+                    @Html.DisplayName("User Email")
+                </th>
+                <th>
+                    @Html.DisplayName("Rental Cost")
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeliveryId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeliveryDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rental.Vehicle.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rental.VehicleType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rental.RegularUser.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RentalCost)
+            </td>
+        </tr>
+            }
+        </table>
+
+
+    </div>
+

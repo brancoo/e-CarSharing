@@ -1,5 +1,7 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -165,6 +167,13 @@ namespace e_CarSharing.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult VehiclesDeliveries()
+        {
+            var userId = User.Identity.GetUserId();
+            var list = db.Deliveries.Where(v => v.Rental.Vehicle.OwnerId == userId).ToList();
+            return View(list);
         }
     }
 }

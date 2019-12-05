@@ -30,22 +30,28 @@ namespace e_CarSharing.Migrations
 
             foreach (var roles in roleNames)
             {
-                if (!roleManager.RoleExists(roles))
-                {
+                if (!roleManager.RoleExists(roles)){
                     var role = new IdentityRole();
                     role.Name = roles;
                     roleManager.Create(role);
                 }
             }
 
-            var user = new ApplicationUser { UserName = "admin@admin.com", Email = "admin@admin.com" };
-            var admin = userManager.Create(user, "admin");
-            if (admin.Succeeded)
+            ApplicationUser admin = userManager.FindByName("admin@admin.com");
+            if (admin != null)
             {
-                //here we tie the new user to the role
-                userManager.AddToRole(user.Id, "Admin");
+                var user = new ApplicationUser { UserName = "Admin", Email = "admin@admin.com"};
+                var userAdmin = userManager.Create(user, "admin");
+                if (userAdmin.Succeeded)
+                {   //here we tie the new user to the role
+                    userManager.AddToRole(user.Id, "Admin");
+                }
+                else
+                {
+                    throw new Exception();
+                }
             }
-
+            
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('BankAccounts', RESEED, 0)");
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('Owners', RESEED, 0)");
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('RegularUsers', RESEED, 0)");

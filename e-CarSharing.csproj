@@ -504,8 +504,12 @@
     <Content Include="Views\Rentals\ListAllRentals.cshtml" />
     <Content Include="Views\Account\ListAllOwners.cshtml" />
     <Content Include="Views\Account\ListAllRegularUsers.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Account\DeleteOwner.cshtml" />
     <Content Include="Views\Account\DeleteRegularUser.cshtml" />
+=======
+    <Content Include="Views\Vehicles\VehiclesDeliveries.cshtml" />
+>>>>>>> cb6c62e5808516bdf293ba630cd42c4180a35073
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
