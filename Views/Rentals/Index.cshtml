@@ -51,7 +51,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.VehicleType)
             </td>
-            @if (item.Vehicle.BeingUsed == true)
+            @if (item.Delivery == null)
             {
                 <td>
                     @Html.ActionLink("Delivery Vehicle", "DeliveryVehicle", "Deliveries", new { id = item.RentalId, @class = "btn btn-primary btn-lg" }, null)

@@ -80,6 +80,9 @@ namespace e_CarSharing.Controllers
                 delivery.RentalCost = (decimal)(totalDaysDelayed * 7.5) + (DateTime.Now - rental.RentalDate).Days + delivery.RentalCost;  //7.5€ of fee
             }
 
+            rental.Delivery = delivery;
+            rental.DeliveryId = delivery.DeliveryId;
+
             db.Deliveries.Add(delivery);
             db.Entry(vehicle).State = EntityState.Modified;
             db.Entry(rental).State = EntityState.Modified;

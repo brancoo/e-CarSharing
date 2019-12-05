@@ -58,6 +58,12 @@
                             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="@Url.Action("Create", "Rentals")">Rent a car</a>
                         </li>
                     }
+                    @if (User.IsInRole("User")) //just shows this action if the user is a Regular_User
+                    {
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="@Url.Action("Index", "Rentals")">List rents</a>
+                        </li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

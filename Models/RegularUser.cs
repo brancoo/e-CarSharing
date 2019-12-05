@@ -8,6 +8,10 @@ namespace e_CarSharing.Models
     {
         public int RegularUserId { get; set; }
 
+        [ForeignKey("ApplicationUser")]
+        public string UserId { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
+
         [Required(ErrorMessage = "You must provide a name!")]
         [DataType(DataType.Text), MaxLength(80)] 
         public string Name { get; set; }

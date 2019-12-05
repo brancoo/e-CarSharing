@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using e_CarSharing.Models;
 using static e_CarSharing.Models.ApplicationDbContext;
+using System.Net;
 
 namespace e_CarSharing.Controllers
 {
@@ -74,12 +75,100 @@ namespace e_CarSharing.Controllers
             return View(owners.ToList());
         }
 
+        [Authorize(Roles = "Admin")]
+        public ActionResult DeleteOwner(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Owner userId = context.Owner.Find(id);
+            if (userId == null)
+            {
+                return HttpNotFound();
+            }
+            return View(userId);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost, ActionName("DeleteOwner")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteOwnerConfirmedAsync(int id)           
+        {
+            var user = context.Owner.Find(id);
+            var applicationUser = UserManager.Users.FirstOrDefault(x => x.Id == user.UserId);
+
+            var vehicles = context.Vehicles.Where(x=>x.OwnerId == user.UserId);
+
+            foreach(var aux in vehicles)
+            {
+                context.Vehicles.Remove(aux);
+            }
+
+            var banckAccount = context.BankEntity.Find(user.BankAccountId);
+            context.BankEntity.Remove(banckAccount);
+            context.Owner.Remove(user);
+
+
+            await context.SaveChangesAsync();
+
+            await UserManager.DeleteAsync(applicationUser);
+
+
+            return RedirectToAction("ListAllOwners");
+        }
+
+
 
         [Authorize(Roles = "Admin")]
         public ActionResult ListAllRegularUsers()
         {
             var regularUsers = context.RegularUser.OrderBy(x => x.RegularUserId);
             return View(regularUsers.ToList());
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult DeleteRegularUser(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            RegularUser userId = context.RegularUser.Find(id);
+            if (userId == null)
+            {
+                return HttpNotFound();
+            }
+            return View(userId);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost, ActionName("DeleteRegularUser")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteRegularUserConfirmedAsync(int id)
+        {
+            var user = context.RegularUser.Find(id);
+            var applicationUser = UserManager.Users.FirstOrDefault(x => x.Id == user.UserId);
+
+            var banckAccount = context.BankEntity.Find(user.BankAccountId);
+            context.BankEntity.Remove(banckAccount);
+
+            var rentals = context.Rentals.Where(x => x.RegularUserId == user.UserId);
+
+            foreach(var aux in rentals)
+            {
+                var delivery = context.Deliveries.Where(x => x.RentalId == aux.RentalId).FirstOrDefault();
+                context.Rentals.Remove(aux);
+                context.Deliveries.Remove(delivery);
+            }
+
+            context.RegularUser.Remove(user);
+            
+            await context.SaveChangesAsync();
+            await UserManager.DeleteAsync(applicationUser);
+
+
+            return RedirectToAction("ListAllRegularUsers");
         }
 
 
@@ -199,22 +288,23 @@ namespace e_CarSharing.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-
                     if (model.Role == "Owner")
                     {
                         var aux = context.BankEntity.Add(new BankAccount() { BankAccountNumber = model.BankAccountNumber, BankName = model.BankName });
-                        context.Owner.Add(new Owner() { Name = model.Name, City = model.City, OwnerType = model.Identification, BankAccountId = aux.BankAccountId, BankAccount = aux });
+                        context.Owner.Add(new Owner() { Name = model.Name, City = model.City, OwnerType = model.Identification, BankAccountId = aux.BankAccountId, BankAccount = aux, UserId = user.Id, ApplicationUser = context.Users.Find(user.Id) });
                     }
                     if (model.Role == "User")
                     {
                         var aux = context.BankEntity.Add(new BankAccount() { BankAccountNumber = model.BankAccountNumber, BankName = model.BankName });
-                        context.RegularUser.Add(new RegularUser() { Name = model.Name, City = model.City, BankAccountId = aux.BankAccountId, BankAccount = aux });
+                        context.RegularUser.Add(new RegularUser() { Name = model.Name, City = model.City, BankAccountId = aux.BankAccountId, BankAccount = aux, UserId = user.Id, ApplicationUser = context.Users.Find(user.Id) });
                     }
 
                     await context.SaveChangesAsync();
+
                     await this.UserManager.AddToRolesAsync(user.Id, model.Role);
-                    
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+
                     return RedirectToAction("Index", "Home");
                 }
                 ViewBag.roles = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin"))

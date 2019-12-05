@@ -248,6 +248,14 @@
     <Compile Include="Migrations\201911301518246_AddedRentalCost.Designer.cs">
       <DependentUpon>201911301518246_AddedRentalCost.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912031600569_AddApplicationUserToRegularUserOwner.cs" />
+    <Compile Include="Migrations\201912031600569_AddApplicationUserToRegularUserOwner.Designer.cs">
+      <DependentUpon>201912031600569_AddApplicationUserToRegularUserOwner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912031638487_update.....cs" />
+    <Compile Include="Migrations\201912031638487_update.....Designer.cs">
+      <DependentUpon>201912031638487_update.....cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BankAccount.cs" />
@@ -496,6 +504,8 @@
     <Content Include="Views\Rentals\ListAllRentals.cshtml" />
     <Content Include="Views\Account\ListAllOwners.cshtml" />
     <Content Include="Views\Account\ListAllRegularUsers.cshtml" />
+    <Content Include="Views\Account\DeleteOwner.cshtml" />
+    <Content Include="Views\Account\DeleteRegularUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -518,6 +528,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911301518246_AddedRentalCost.resx">
       <DependentUpon>201911301518246_AddedRentalCost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912031600569_AddApplicationUserToRegularUserOwner.resx">
+      <DependentUpon>201912031600569_AddApplicationUserToRegularUserOwner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912031638487_update.....resx">
+      <DependentUpon>201912031638487_update.....cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
