@@ -38,7 +38,7 @@ namespace e_CarSharing.Migrations
             }
 
             ApplicationUser admin = userManager.FindByName("admin@admin.com");
-            if (admin != null)
+            /*if (admin != null)
             {
                 var user = new ApplicationUser { UserName = "Admin", Email = "admin@admin.com"};
                 var userAdmin = userManager.Create(user, "admin");
@@ -50,7 +50,7 @@ namespace e_CarSharing.Migrations
                 {
                     throw new Exception();
                 }
-            }
+            }*/
             
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('BankAccounts', RESEED, 0)");
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('Owners', RESEED, 0)");

@@ -534,4 +534,4 @@ C:\Users\Branco\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.AddedRent
 C:\Users\alexa\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.FinalModel.resources
 C:\Users\alexa\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.AddedRentalCost.resources
 C:\Users\alexa\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.AddApplicationUserToRegularUserOwner.resources
-C:\Users\alexa\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.update.resources
+C:\Users\alexa\Desktop\e-CarSharing\obj\Debug\e_CarSharing.Migrations.UpdateRentals.resources

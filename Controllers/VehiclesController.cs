@@ -16,7 +16,7 @@ namespace e_CarSharing.Controllers
     public class VehiclesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
+        
         // GET: Vehicles
         [Authorize(Roles = "Owner")]
         public ActionResult Index(string sortOrder)

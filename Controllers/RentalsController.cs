@@ -26,7 +26,7 @@ namespace e_CarSharing.Controllers
         {
 
             var userID = User.Identity.GetUserId();
-            var rentals = db.Rentals.Include(x=>x.Vehicle).Include(x=>x.VehicleStation).Where(x=>x.RegularUserId == userID);
+            var rentals = db.Rentals.Include(x=>x.Vehicle).Include(x=>x.VehicleStation).Include(x=>x.DeliveryVehicleStation).Where(x=>x.RegularUserId == userID);
             //sort list and return list of vehicles by some order 
             switch (sortOrder)
             {
@@ -35,6 +35,7 @@ namespace e_CarSharing.Controllers
                 case "rentalDate ": return View(rentals.OrderBy(v => v.RentalDate).ToList());
                 case "deliveryExpectedDate": return View(rentals.OrderBy(v => v.DeliveryExpectedDate).ToList());
                 case "vehicleStation": return View(rentals.OrderBy(v => v.VehicleStation.Name).ToList());
+                case "deliveryVehicleStation": return View(rentals.OrderBy(v => v.DeliveryVehicleStation.Name).ToList());
                 default: return View(rentals.ToList());
             }
 
@@ -68,6 +69,9 @@ namespace e_CarSharing.Controllers
         [Authorize(Roles = "User")]
         public ActionResult Create()
         {
+            //ViewBag.DeliveryVehicleStationId = new SelectList(db.VehicleStations.Where(x => x.Vehicles.Count != 0), "VehicleStationId", "Name");
+            ViewBag.DeliveryVehicleStationId = db.VehicleStations;
+
             ViewBag.VehicleStationId = new SelectList(db.VehicleStations.Where(x => x.Vehicles.Count != 0), "VehicleStationId", "Name");
             ViewBag.VehicleId = new SelectList(db.Vehicles.Where(x => x.BeingUsed == false), "VehicleId", "Name");
             return View();
@@ -88,6 +92,7 @@ namespace e_CarSharing.Controllers
                 Vehicle vehicle = db.Vehicles.Include(x=>x.Owner).Include(x=>x.VehicleStation).FirstOrDefault(x => x.VehicleId == rental.VehicleId);
                 if (vehicle.VehicleType != rental.VehicleType)
                 {
+                    ViewBag.DeliveryVehicleStationId = db.VehicleStations;
                     ViewBag.VehicleStationId = new SelectList(db.VehicleStations.Where(x => x.Vehicles.Count != 0), "VehicleStationId", "Name");
                     ViewBag.VehicleId = new SelectList(db.Vehicles.Where(x => x.BeingUsed == false), "VehicleId", "Name");
                     return View(rental);
@@ -98,7 +103,7 @@ namespace e_CarSharing.Controllers
                     if (v.VehicleId == rental.VehicleId)
                     {
                         vehicle.BeingUsed = true;
-                        string userID = User.Identity.GetUserId();
+                        var userID = User.Identity.GetUserId();
                         var regularUser = db.Users.Find(userID);
                         rental.RegularUserId = userID;
                         rental.RegularUser = regularUser;
@@ -107,17 +112,20 @@ namespace e_CarSharing.Controllers
                         DateTime enteredDate = DateTime.Parse(DeliveryExpectedDate);
                         rental.DeliveryExpectedDate = enteredDate;
 
+                        rental.DeliveryVehicleStation = db.VehicleStations.Find(rental.DeliveryVehicleStationId);
+
                         db.Rentals.Add(rental);
                         db.Entry(vehicle).State = EntityState.Modified;
                         await db.SaveChangesAsync();
                         return RedirectToAction("Index");
                     }
                 }
+                ViewBag.DeliveryVehicleStationId = db.VehicleStations;
                 ViewBag.VehicleStationId = new SelectList(db.VehicleStations.Where(x => x.Vehicles.Count != 0), "VehicleStationId", "Name");
                 ViewBag.VehicleId = new SelectList(db.Vehicles.Where(x => x.BeingUsed == false), "VehicleId", "Name");
                 return View(rental);
             }
-
+            ViewBag.DeliveryVehicleStationId = db.VehicleStations;
             ViewBag.VehicleStationId = new SelectList(db.VehicleStations.Where(x => x.Vehicles.Count != 0), "VehicleStationId", "Name");
             ViewBag.VehicleId = new SelectList(db.Vehicles.Where(x => x.BeingUsed == false), "VehicleId", "Name");
 

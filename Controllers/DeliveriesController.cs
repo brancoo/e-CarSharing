@@ -37,7 +37,7 @@ namespace e_CarSharing.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeliveryVehicleConfirmation(int id)
         {
-            Rental rental = db.Rentals.Include(x=>x.RegularUser).Include(x=>x.Vehicle).Include(x=>x.VehicleStation).FirstOrDefault(x=>x.RentalId == id);
+            Rental rental = db.Rentals.Include(x=>x.RegularUser).Include(x=>x.Vehicle).Include(x=>x.VehicleStation).Include(x=>x.DeliveryVehicleStation).FirstOrDefault(x=>x.RentalId == id);
 
             if (rental == null)
             {
@@ -80,8 +80,29 @@ namespace e_CarSharing.Controllers
                 delivery.RentalCost = (decimal)(totalDaysDelayed * 7.5) + (DateTime.Now - rental.RentalDate).Days + delivery.RentalCost;  //7.5€ of fee
             }
 
+            if (rental.VehicleStation != rental.DeliveryVehicleStation)
+            {
+                var VehicleStationList = db.VehicleStations.Include(x => x.Vehicles);
+                foreach (var station in VehicleStationList)
+                {
+                    if (station.VehicleStationId == rental.VehicleStationId)
+                    {
+                        station.Vehicles.Remove(rental.Vehicle);
+                        db.Entry(station).State = EntityState.Modified;
+                    }
+                    if (station.VehicleStationId == rental.DeliveryVehicleStationId)
+                    {
+                        station.Vehicles.Add(rental.Vehicle);
+                        vehicle.VehicleStationId = rental.VehicleStationId;
+                        vehicle.VehicleStation = station;
+                        db.Entry(station).State = EntityState.Modified;
+                    }
+                }
+            }
+
             rental.Delivery = delivery;
             rental.DeliveryId = delivery.DeliveryId;
+            
 
             db.Deliveries.Add(delivery);
             db.Entry(vehicle).State = EntityState.Modified;

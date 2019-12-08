@@ -19,6 +19,9 @@
                     @Html.ActionLink("Vehicle Station", "Index", new { sortOrder = "vehicleStation" })
                 </th>
                 <th>
+                    @Html.ActionLink("Delivery Vehicle Station", "Index", new { sortOrder = "deliveryVehicleStation" })
+                </th>
+                <th>
                     @Html.ActionLink("Rental Date ", "Index", new { sortOrder = "rentalDate" })
                 </th>
                 <th>
@@ -41,6 +44,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.VehicleStation.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeliveryVehicleStation.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RentalDate)
