@@ -69,12 +69,42 @@ namespace e_CarSharing.Controllers
         [Authorize(Roles = "User")]
         public ActionResult Create()
         {
-            //ViewBag.DeliveryVehicleStationId = new SelectList(db.VehicleStations.Where(x => x.Vehicles.Count != 0), "VehicleStationId", "Name");
             ViewBag.DeliveryVehicleStationId = db.VehicleStations;
-
             ViewBag.VehicleStationId = new SelectList(db.VehicleStations.Where(x => x.Vehicles.Count != 0), "VehicleStationId", "Name");
             ViewBag.VehicleId = new SelectList(db.Vehicles.Where(x => x.BeingUsed == false), "VehicleId", "Name");
+
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult findVehicles(int id, string tipoveiculo)
+        {
+            
+            foreach(VehicleType a in Enum.GetValues(typeof(VehicleType)))
+            {
+                if(tipoveiculo.Equals(a.ToString()))
+                {
+                    if(id == -1)
+                    {
+                        var aux = db.Vehicles.Where(x => x.VehicleType == a);
+                        return Json(aux, JsonRequestBehavior.AllowGet);
+                    }                        
+                    else
+                    {
+                        var aux = db.Vehicles.Where(x => x.VehicleStationId == id && x.VehicleType == a);
+                        return Json(aux, JsonRequestBehavior.AllowGet);
+                    }                             
+                }
+            }
+
+            if(id != -1)                          //SELECIONADO APENAS ESTACAO VEICULO
+            {
+                var aux = db.Vehicles.Where(x => x.VehicleStationId == id);
+                return Json(aux, JsonRequestBehavior.AllowGet);
+            }
+
+            var auxx = db.Vehicles;              //NAO SELECIONADO ESTACAO DO VEICULO NEM TIPO DE VEICULO
+            return Json(auxx, JsonRequestBehavior.AllowGet);
         }
 
 

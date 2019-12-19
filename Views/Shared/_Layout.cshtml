@@ -52,16 +52,43 @@
                             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="@Url.Action("Create", "Vehicles")">Add a new vehicle</a>
                         </li>
                     }
+
                     @if (User.IsInRole("User")) //just shows this action if the user is a Regular_User
                     {
                         <li class="nav-item mx-0 mx-lg-1">
                             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="@Url.Action("Create", "Rentals")">Rent a car</a>
                         </li>
-                    }
-                    @if (User.IsInRole("User")) //just shows this action if the user is a Regular_User
-                    {
                         <li class="nav-item mx-0 mx-lg-1">
                             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="@Url.Action("Index", "Rentals")">List rents</a>
+                        </li>
+                    }
+
+                    @if (User.IsInRole("Admin")) //just shows this action if the user is a Regular_User
+                    {
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="@Url.Action("ListAllVehicles", "Vehicles")">List all vehicles</a>
+                        </li>
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="@Url.Action("Create", "VehicleStations")">Add vehicle station</a>
+                        </li>
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="@Url.Action("Index", "VehicleStations")">List all vehicles station</a>
+                        </li>
+                        @*<li class="nav-item mx-0 mx-lg-1">
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="@Url.Action("ListAllRegularUsers", "Account")">List all regular users</a>
+            </li>
+            <li class="nav-item mx-0 mx-lg-1">
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="@Url.Action("ListAllOwners", "Account")">List all Owners</a>
+            </li>*@
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Click Me!
+                            </a>
+                            <!-- Here's the magic. Add the .animate and .slide-in classes to your .dropdown-menu and you're all set! -->
+                            <div class="dropdown-menu dropdown-menu-right animate slideIn" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                            </div>
                         </li>
                     }
                 </ul>
@@ -104,5 +131,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+    
+    <script src="~/Content/js/Pnotify_buttons.js"></script>
 </body>
 </html>

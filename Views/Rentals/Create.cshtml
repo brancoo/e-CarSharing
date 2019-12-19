@@ -15,77 +15,107 @@
         <div class="divider-custom-line"></div>
     </div>
 
-    @using (Html.BeginForm("Create","Rentals"))
+    @using (Html.BeginForm("Create", "Rentals"))
     {
         @Html.AntiForgeryToken()
 
-<div class="form-horizontal" align="center">
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-horizontal" align="center">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.VehicleId, "Vehicle Name", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-2">
-            @Html.DropDownList("VehicleId", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.VehicleId, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.VehicleId, "Vehicle Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-2">
+                    @Html.DropDownList("VehicleId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.VehicleId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.VehicleType, "Vehicle Type", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-2">
+                    @Html.EnumDropDownListFor(model => model.VehicleType, "Choose Vehicle Type", htmlAttributes: new { @class = "form-control", @onchange = "correr()" })
+                    @Html.ValidationMessageFor(model => model.VehicleType, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.VehicleStationId, "Vehicle Station", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-2">
+                    @Html.DropDownListFor(x => x.VehicleStationId, ViewBag.VehicleStationId as SelectList, "Choose Station", new { @class = "form-control", @onchange = "correr()" })
+                    @Html.ValidationMessageFor(model => model.VehicleStationId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DeliveryVehicleStationId, "Delivery Vehicle Station", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-2">
+                    @Html.DropDownList("DeliveryVehicleStationId", new SelectList(ViewBag.DeliveryVehicleStationId, "VehicleStationId", "Name"), htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.DeliveryVehicleStationId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DeliveryExpectedDate, "Vehicle's Delivery Date", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-2">
+                    <input class="datepicker" name="DeliveryExpectedDate" type="text" id="fromDate" />
+                </div>
+            </div>
+            <script>
+                $(document).ready(function () {
+                    $(".datepicker").datepicker({
+                        format: 'dd/mm/yyyy',
+                        autoclose: true,
+                        todayBtn: 'linked',
+                        clearBtn: true,
+                        todayHighlight: true,
+                        startDate: "today",
+                    })
+                    correr();
+                });
+
+                function correr() {
+                    var tipoveiculo = $('#VehicleType option:selected').text();
+                    console.log(tipoveiculo);
+                    var estacaoid = $('#VehicleStationId').val();
+                    if (estacaoid == "") {
+                        estacaoid = -1;
+                    }
+                    
+                    $.ajax({
+                        url: "/Rentals/findVehicles?id=" + estacaoid + "&tipoveiculo=" + tipoveiculo,
+                        //url: "/Rentals/findVehicles",
+                        type: "POST",
+                        dataType: "JSON",
+                        //data: { VehicleStationId: estacaoid },
+                        success: function (aux) {
+                            console.log("entrou");
+                            $("#VehicleId").html(""); // clear before appending new list
+                            $.each(aux, function (i, city) {
+                                console.log(tipoveiculo);
+                                $("#VehicleId").append(
+                                    $('<option></option>').val(city.VehicleId).html(city.Name));
+                            });
+                        }
+                    });
+                }
+            </script>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Rent this car" class="btn btn-primary btn-lg" />
+                </div>
+            </div>
         </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.VehicleType, "Vehicle Type", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-2">
-            @Html.EnumDropDownListFor(model => model.VehicleType, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.VehicleType, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.VehicleStationId, "Vehicle Station", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-2">
-            @Html.DropDownList("VehicleStationId", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.VehicleStationId, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.DeliveryVehicleStationId, "Delivery Vehicle Station", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-2">
-            @Html.DropDownList("DeliveryVehicleStationId", new SelectList(ViewBag.DeliveryVehicleStationId, "VehicleStationId", "Name"), htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.DeliveryVehicleStationId, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.DeliveryExpectedDate, "Vehicle's Delivery Date", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-2">
-            <input class="datepicker" name="DeliveryExpectedDate" type="text" id="fromDate" />
-        </div>
-    </div>
-    <script>
-        $(document).ready(function () {
-            $(".datepicker").datepicker({
-                format: 'dd/mm/yyyy',
-                autoclose: true,
-                todayBtn: 'linked',
-                clearBtn: true,
-                todayHighlight: true,
-                startDate: "today",
-            })
-        });
-    </script>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Rent this car" class="btn btn-primary btn-lg" />
-        </div>
-    </div>
-</div>
     }
 </div>
 <div style="position: relative;margin-left: 47.2%;margin-bottom: 1%">
     <input type="submit" onclick="location.href='@Url.Action("Index", "Rentals")'" value="Return" class="btn btn-primary btn" />
 </div>
+
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Script/jquery-3.4.1.min.js")
 }

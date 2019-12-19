@@ -264,16 +264,18 @@ namespace e_CarSharing.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            if (Request.IsAuthenticated)
+            if (Request.IsAuthenticated && User.IsInRole("Admin"))
             {
-                return View("../Home/Index");
+                ViewBag.Roles = new SelectList(context.Roles.Where(x => x.Name == "Admin").ToList(), "Name", "Name");
+                return View();
             }
 
-            ViewBag.Roles = new SelectList(context.Roles.ToList(), "Name", "Name");
+            ViewBag.Roles = new SelectList(context.Roles.Where(x => x.Name != "Admin").ToList(), "Name", "Name");
 
             ViewBag.Identification = new SelectList(typeof(OwnerType).GetEnumValues(), typeof(OwnerType).GetEnumValues(), typeof(OwnerType).GetEnumValues());
             return View();
         }
+
 
         //
         // POST: /Account/Register
