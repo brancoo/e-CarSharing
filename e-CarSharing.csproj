@@ -231,6 +231,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RentalsController.cs" />
+    <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Controllers\VehiclesController.cs" />
     <Compile Include="Controllers\VehicleStationsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -260,6 +261,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BankAccount.cs" />
     <Compile Include="Models\Constants.cs" />
+    <Compile Include="Models\DataPoint.cs" />
     <Compile Include="Models\Delivery.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -369,6 +371,7 @@
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\canvasjs.min.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -509,6 +512,7 @@
     <Content Include="Views\Account\ListAllRegularUsers.cshtml" />
     <Content Include="Views\Account\DeleteOwner.cshtml" />
     <Content Include="Views\Account\DeleteRegularUser.cshtml" />
+    <Content Include="Views\Statistics\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
