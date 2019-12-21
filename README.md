@@ -6,15 +6,15 @@ In our platform you can register as a **RegularUser** or a simple **Owner** of a
 
 Main roles involved and it's features
 
-**1. RegularUser**:
+**1. RegularUser**
      - Rent a vehicle
      - List of previous rents
   
-**2. Owner**:
+**2. Owner**
      - Add his vehicles into vehicles stations
      - List his own vehicles
   
-**3. Admin**:
+**3. Admin**
      - Create and remove RegularUsers
      - Create and remove Owners
      - List of every vehicles registered in the platform
