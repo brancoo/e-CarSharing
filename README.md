@@ -4,7 +4,8 @@ Web platform built in **C#** supported with **SQL Server** and **ASP.NET MVC**, 
 **e-CarSharing** is a service where you can rent a vehicle, or put your own vehicle at service.
 In our platform you can register as a **RegularUser** or a simple **Owner** of a vehicle.
 
-Main roles involved and it's features:
+Main roles involved and it's features
+
 **1.  RegularUser**:
       - Rent a vehicle;
       - List of previous rents.
@@ -21,7 +22,7 @@ Main roles involved and it's features:
       - List of every RegularUser and Owners.
   
   
-##  Frameworks used ##:
+##  Frameworks used:
     - Identity, for role and authorization management;
     - Entity Framework, for database operations.
 
