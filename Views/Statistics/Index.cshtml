@@ -9,24 +9,24 @@
     <script>
 window.onload = function () {
 
-var chart = new CanvasJS.Chart("chartContainer", {
-	theme: "light1", // "light1", "light2", "dark1", "dark2"
-	exportEnabled: true,
-	animationEnabled: true,
-	title: {
-		text: "Lease number at each station"
-	},
-	subtitles: [{
-		text: "2019"
-	}],
-	data: [{
-		type: "pie",
-		startAngle: 180,
-		toolTipContent: "<b>{label}</b>: {y}%",
-		showInLegend: "true",
-		legendText: "{label}",
-		indexLabel: "{label} - {y}%",
-		dataPoints: @Html.Raw(ViewBag.DataPoints)
+    var chart = new CanvasJS.Chart("chartContainer", {
+        theme: "light1", // "light1", "light2", "dark1", "dark2"
+        exportEnabled: true,
+        animationEnabled: true,
+        title: {
+            text: "Lease number at each station"
+        },
+        subtitles: [{
+            text: "2019"
+        }],
+        data: [{
+            type: "pie",
+            startAngle: 180,
+            toolTipContent: "<b>{label}</b>: {y}%",
+            showInLegend: "true",
+            legendText: "{label}",
+            indexLabel: "{label} - {y}%",
+            dataPoints: @Html.Raw(ViewBag.DataPoints)
 	}]
 });
 chart.render();

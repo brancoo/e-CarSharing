@@ -27,13 +27,6 @@ namespace e_CarSharing.Controllers
                 dataPoints.Add(new DataPoint(stations.Name, Math.Round((double)(100 * Nrentals)/totalRentals,2)));
             }
 
-            /*dataPoints.Add(new DataPoint("Samsung", 25));
-            dataPoints.Add(new DataPoint("Micromax", 13));
-            dataPoints.Add(new DataPoint("Lenovo", 8));
-            dataPoints.Add(new DataPoint("Intex", 7));
-            dataPoints.Add(new DataPoint("Reliance", 6.8));
-            dataPoints.Add(new DataPoint("Others", 40.2));*/
-
             ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
 
             return View();

@@ -8,6 +8,7 @@ using Microsoft.Owin.Security;
 using e_CarSharing.Models;
 using static e_CarSharing.Models.ApplicationDbContext;
 using System.Net;
+using System.Data.Entity;
 
 namespace e_CarSharing.Controllers
 {
@@ -102,6 +103,16 @@ namespace e_CarSharing.Controllers
 
             foreach(var aux in vehicles)
             {
+                var rents = context.Rentals.Where(x => x.VehicleId == aux.VehicleId);
+                foreach(var aux2 in rents)
+                {
+                    var deliver = context.Deliveries.Where(x => x.RentalId == aux2.RentalId).FirstOrDefault();
+                    if(deliver != null)
+                    {
+                        context.Deliveries.Remove(deliver);
+                    }
+                    context.Rentals.Remove(aux2);
+                }
                 context.Vehicles.Remove(aux);
             }
 
@@ -153,13 +164,21 @@ namespace e_CarSharing.Controllers
             var banckAccount = context.BankEntity.Find(user.BankAccountId);
             context.BankEntity.Remove(banckAccount);
 
-            var rentals = context.Rentals.Where(x => x.RegularUserId == user.UserId);
+            var rentals = context.Rentals.Where(x => x.RegularUserId == user.UserId).Include(x => x.Vehicle);
 
             foreach(var aux in rentals)
             {
+                if(aux.Vehicle.BeingUsed == true)
+                {
+                    aux.Vehicle.BeingUsed = false;
+                    context.Entry(aux.Vehicle).State = EntityState.Modified;
+                }
                 var delivery = context.Deliveries.Where(x => x.RentalId == aux.RentalId).FirstOrDefault();
                 context.Rentals.Remove(aux);
-                context.Deliveries.Remove(delivery);
+                if(delivery != null)
+                {
+                    context.Deliveries.Remove(delivery);
+                }
             }
 
             context.RegularUser.Remove(user);
@@ -177,6 +196,14 @@ namespace e_CarSharing.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            /*context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('Owners', RESEED, 0)");
+            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('RegularUsers', RESEED, 0)");
+            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('Rentals', RESEED, 0)");
+            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('Vehicles', RESEED, 0)");
+            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('VehicleStations', RESEED, 0)");
+            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('Deliveries', RESEED, 0)");
+            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('BankAccounts', RESEED, 0)");*/
+
             if (Request.IsAuthenticated)
             {
                 returnUrl = null;

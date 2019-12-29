@@ -51,6 +51,9 @@
                         <li class="nav-item mx-0 mx-lg-1">
                             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="@Url.Action("Create", "Vehicles")">Add a new vehicle</a>
                         </li>
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="@Url.Action("VehiclesDeliveries", "Vehicles")">List all deliveries</a>
+                        </li>
                     }
 
                     @if (User.IsInRole("User")) //just shows this action if the user is a Regular_User
@@ -65,6 +68,9 @@
 
                     @if (User.IsInRole("Admin")) //just shows this action if the user is a Regular_User
                     {
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="@Url.Action("ListAllRentals", "Rentals")">List all rentals</a>
+                        </li>
                         <li class="nav-item mx-0 mx-lg-1">
                             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="@Url.Action("ListAllVehicles", "Vehicles")">List all vehicles</a>
                         </li>

@@ -5,61 +5,66 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<br /><br /><br /><br /><br /><br />
+    <div style="margin-top: 15%">
+        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Rent a car!</h2>
+        <div class="divider-custom">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon">
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="divider-custom-line"></div>
+        </div>
 
+        <h2>ListAllVehicles</h2>
 
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Owner.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.VehicleStation.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.VehicleType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BeingUsed)
+                </th>
+                <th></th>
+            </tr>
 
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Owner.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VehicleStation.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VehicleType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BeingUsed)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.VehicleId }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.VehicleId }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.VehicleId })
+                    </td>
+                </tr>
+            }
 
-
-
-<h2>ListAllVehicles</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Owner.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.VehicleStation.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.VehicleType)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BeingUsed)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Owner.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.VehicleStation.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.VehicleType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BeingUsed)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.VehicleId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.VehicleId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.VehicleId })
-        </td>
-    </tr>
-}
-
-</table>
+        </table>
+        </div>
