@@ -14,7 +14,7 @@ using Microsoft.AspNet.Identity;
 
 namespace e_CarSharing.Controllers
 {
-    [Authorize(Roles = "User, Admin")]
+    [Authorize(Roles = "User, Admin, Owner")]
     public class RentalsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -44,7 +44,7 @@ namespace e_CarSharing.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult ListAllRentals()
         {
-            var rentals = db.Rentals.Include(x => x.Vehicle).Include(x => x.VehicleStation).OrderBy(x=>x.RentalId);
+            var rentals = db.Rentals.Include(x => x.Vehicle).Include(x => x.VehicleStation).Include(x => x.RegularUser).OrderBy(x=>x.RentalId);
             return View(rentals.ToList());
         }
 
@@ -78,20 +78,19 @@ namespace e_CarSharing.Controllers
 
         [HttpPost]
         public JsonResult findVehicles(int id, string tipoveiculo)
-        {
-            
+        {            
             foreach(VehicleType a in Enum.GetValues(typeof(VehicleType)))
             {
                 if(tipoveiculo.Equals(a.ToString()))
                 {
                     if(id == -1)
                     {
-                        var aux = db.Vehicles.Where(x => x.VehicleType == a);
+                        var aux = db.Vehicles.Where(x => x.VehicleType == a && x.BeingUsed == false);
                         return Json(aux, JsonRequestBehavior.AllowGet);
                     }                        
                     else
                     {
-                        var aux = db.Vehicles.Where(x => x.VehicleStationId == id && x.VehicleType == a);
+                        var aux = db.Vehicles.Where(x => x.VehicleStationId == id && x.VehicleType == a && x.BeingUsed == false);
                         return Json(aux, JsonRequestBehavior.AllowGet);
                     }                             
                 }
@@ -99,11 +98,11 @@ namespace e_CarSharing.Controllers
 
             if(id != -1)                          //SELECIONADO APENAS ESTACAO VEICULO
             {
-                var aux = db.Vehicles.Where(x => x.VehicleStationId == id);
+                var aux = db.Vehicles.Where(x => x.VehicleStationId == id && x.BeingUsed == false);
                 return Json(aux, JsonRequestBehavior.AllowGet);
             }
 
-            var auxx = db.Vehicles;              //NAO SELECIONADO ESTACAO DO VEICULO NEM TIPO DE VEICULO
+            var auxx = db.Vehicles.Where(x => x.BeingUsed == false);              //NAO SELECIONADO ESTACAO DO VEICULO NEM TIPO DE VEICULO
             return Json(auxx, JsonRequestBehavior.AllowGet);
         }
 
